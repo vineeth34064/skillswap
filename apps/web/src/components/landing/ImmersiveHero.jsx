@@ -124,7 +124,7 @@ const ImmersiveHero = ({ onOpenAuth }) => {
       </motion.div>
 
       {/* Hero Center Content Card */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center mt-2 sm:mt-4 space-y-4 sm:space-y-6">
+      <div className="relative z-10 max-w-4xl mx-auto text-left mt-2 sm:mt-4 space-y-4 sm:space-y-6 w-full">
         
         {/* Subtle Live Badge */}
         <motion.div
@@ -143,8 +143,8 @@ const ImmersiveHero = ({ onOpenAuth }) => {
         </motion.div>
 
         {/* Cinematic Headline */}
-        <div className="space-y-1 sm:space-y-2">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] flex flex-wrap justify-center gap-x-3 sm:gap-x-5 gap-y-1">
+        <div className="space-y-1 sm:space-y-2 text-left">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] flex flex-wrap justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-left">
             {words.map((word, index) => (
               <motion.span
                 key={index}
@@ -161,7 +161,7 @@ const ImmersiveHero = ({ onOpenAuth }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-base sm:text-xl font-medium text-[#B0BAC9] max-w-2xl mx-auto pt-2 sm:pt-4 px-2"
+            className="text-base sm:text-xl font-medium text-[#B0BAC9] max-w-2xl text-left pt-2 sm:pt-4"
           >
             Teach what you know. Learn what you desire. 
             <span className="text-white font-semibold block sm:inline sm:ml-1">Every hour taught earns 1 Time Credit. Zero currency needed.</span>
@@ -173,7 +173,7 @@ const ImmersiveHero = ({ onOpenAuth }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 pt-2"
+          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3.5 sm:gap-4 pt-2"
         >
           <button
             onClick={() => onOpenAuth ? onOpenAuth('register') : navigate('/register')}
