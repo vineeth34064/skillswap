@@ -124,7 +124,7 @@ const ImmersiveHero = ({ onOpenAuth }) => {
       </motion.div>
 
       {/* Hero Center Content Card */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center mt-14 sm:mt-16 space-y-6 sm:space-y-8">
+      <div className="relative z-10 max-w-4xl mx-auto text-center mt-2 sm:mt-4 space-y-4 sm:space-y-6">
         
         {/* Subtle Live Badge */}
         <motion.div

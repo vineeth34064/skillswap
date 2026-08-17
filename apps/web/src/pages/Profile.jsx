@@ -35,7 +35,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-8 space-y-8 relative z-10">
+    <div className="max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-8 py-4 sm:py-6 space-y-6 relative z-10">
       
       {/* Profile Top Hero Card */}
       <SpotlightCard level="premium" className="p-8 relative overflow-hidden">

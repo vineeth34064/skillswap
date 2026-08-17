@@ -66,7 +66,7 @@ const AppContent = () => {
         onOpenOnboarding={() => setOnboardingOpen(true)}
       />
 
-      <main className="flex-1 relative z-10 pt-28 pb-16 w-full">
+      <main className="flex-1 relative z-10 pt-16 sm:pt-20 pb-12 w-full">
         <AppRoutes onOpenAuth={handleOpenAuth} onOpenOnboarding={() => setOnboardingOpen(true)} />
       </main>
 

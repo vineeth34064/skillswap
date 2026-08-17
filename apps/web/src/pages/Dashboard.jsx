@@ -70,7 +70,7 @@ const Dashboard = ({ onOpenOnboarding }) => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-8 py-10 space-y-10 relative z-10"
+      className="max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-8 py-4 sm:py-6 space-y-6 sm:space-y-8 relative z-10"
     >
       
       {/* Background Spatial Glows */}
