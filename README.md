@@ -188,4 +188,11 @@ skillswap/
 
 ## 📜 License
 
-Distributed under the **MIT License**. Free to use, modify, and distribute.
+Distributed under the **MIT License**.
+
+---
+
+## 👤 Author
+
+**Vineet Ramayya Polampalli**
+
