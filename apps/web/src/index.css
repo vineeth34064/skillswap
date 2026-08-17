@@ -3,11 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    background-color: #101827; /* Midnight Navy base */
+  html, body {
+    background-color: #101827;
     color: #F7F9FC;
-    font-family: 'Inter', 'Geist', 'Manrope', sans-serif;
+    font-family: 'Inter', 'Geist', sans-serif;
     overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
     letter-spacing: -0.015em;
   }
 }
@@ -63,55 +65,49 @@
   opacity: 1;
 }
 
-/* Micro-Neomorphism Tactile Controls */
-.btn-neomorphic {
-  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.10), inset -1px -1px 3px rgba(8, 15, 30, 0.6), 3px 5px 12px rgba(8, 15, 30, 0.35);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+/* Gradient Texts & Rare Accents */
+.accent-gradient-text {
+  background: linear-gradient(135deg, #8B7CFF 0%, #72C7FF 50%, #D6B36A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.btn-neomorphic:active {
-  box-shadow: inset 2px 2px 4px rgba(8, 15, 30, 0.7), inset -1px -1px 2px rgba(255, 255, 255, 0.08);
-  transform: translateY(1px) scale(0.98);
-}
-
-/* Spatial Hero Typography */
-.hero-spatial-title {
-  font-size: clamp(3.5rem, 7.5vw, 8.5rem);
-  font-weight: 750;
-  letter-spacing: -0.055em;
-  line-height: 0.95;
-}
-
-/* Rare Accent Gradient Helper */
 .accent-gradient-rare {
-  background: linear-gradient(135deg, #D6B36A 0%, #8B7CFF 100%);
+  background: linear-gradient(135deg, #F8FAFC 0%, #D6B36A 60%, #8B7CFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .accent-gradient-bg {
-  background: linear-gradient(135deg, #D6B36A 0%, #8B7CFF 100%);
-  color: #101827;
+  background: linear-gradient(135deg, #8B7CFF 0%, #72C7FF 50%, #D6B36A 100%);
 }
 
-/* Subtle Atmospheric Noise Overlay */
-.atmospheric-noise {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
-  background-size: 24px 24px;
+.accent-gradient-gold {
+  background: linear-gradient(135deg, #D6B36A 0%, #F59E0B 100%);
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
+/* Custom Webkit Scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-::-webkit-scrollbar-track {
-  background: #101827;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.32);
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.20);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 124, 255, 0.40);
+}
+
+/* Atmospheric Noise Layer */
+.atmospheric-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 0);
+  background-size: 32px 32px;
 }

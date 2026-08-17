@@ -15,28 +15,52 @@ const SpatialSkillNetwork = () => {
   const [activeMember, setActiveMember] = useState(null);
 
   return (
-    <section className="py-28 relative overflow-hidden">
+    <section className="py-20 sm:py-28 relative overflow-hidden w-full max-w-full">
       
       {/* Background Radial Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-[#8B7CFF]/15 via-[#72C7FF]/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[700px] h-[400px] sm:h-[500px] bg-gradient-to-tr from-[#8B7CFF]/15 via-[#72C7FF]/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 space-y-12 relative z-10 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 space-y-10 sm:space-y-12 relative z-10 text-center">
         
         {/* Header */}
         <div className="space-y-3 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-glass-base border border-[#8B7CFF]/30 text-[#8B7CFF] text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5" /> Living Knowledge Web
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
             The SkillSwap <span className="accent-gradient-rare">Network</span>
           </h2>
-          <p className="text-sm text-[#A1ACBC]">
-            Hover over any node to inspect mentor capabilities and match compatibility in real time.
+          <p className="text-xs sm:text-sm text-[#A1ACBC]">
+            Inspect mentor capabilities and reciprocal match compatibility in real time.
           </p>
         </div>
 
-        {/* Spatial Network Canvas */}
-        <div className="relative w-full max-w-4xl h-[500px] mx-auto flex items-center justify-center select-none">
+        {/* Mobile View: Responsive Glass Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 md:hidden text-left">
+          {NETWORK_MEMBERS.map((m) => (
+            <div key={m.id} className="p-4 rounded-2xl liquid-glass-premium border border-white/15 bg-[#101827]/90 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <img src={m.avatar} alt={m.name} className="w-10 h-10 rounded-xl object-cover border border-white/20" />
+                  <div>
+                    <h4 className="font-extrabold text-sm text-white">{m.name}</h4>
+                    <p className="text-[11px] text-[#A1ACBC]">{m.role}</p>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-extrabold border border-emerald-500/30">
+                  {m.match}% MATCH
+                </span>
+              </div>
+              <div className="text-xs space-y-1 pt-2 border-t border-white/10">
+                <div><span className="text-[#8B7CFF] font-bold">Teaches:</span> {m.teaches}</div>
+                <div><span className="text-[#72C7FF] font-bold">Wants:</span> {m.wants}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop View: Interactive Spatial Network Canvas */}
+        <div className="hidden md:flex relative w-full max-w-4xl h-[500px] mx-auto items-center justify-center select-none overflow-hidden">
           
           {/* Connection Lines (SVG) */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none">
@@ -117,7 +141,7 @@ const SpatialSkillNetwork = () => {
         <div className="pt-4 flex justify-center">
           <button
             onClick={() => navigate('/register')}
-            className="px-8 py-3.5 rounded-full accent-gradient-bg text-[#05070A] font-extrabold text-sm shadow-glow hover:scale-105 transition-all flex items-center gap-2"
+            className="px-8 py-3.5 rounded-full accent-gradient-bg text-[#05070A] font-black text-xs sm:text-sm shadow-glow hover:scale-105 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>Join the SkillSwap Network</span>
             <ArrowRight className="w-4 h-4 text-[#05070A]" />
