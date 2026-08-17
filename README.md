@@ -1,141 +1,191 @@
-# SkillSwap — Peer-to-Peer Skill-Exchange Platform
+# ⚡ SkillSwap — Peer-to-Peer Skill Barter & Time Banking Platform
 
-> **Tagline**: *Exchange Skills, Not Money.*
+<div align="center">
 
-SkillSwap is a production-quality peer-to-peer skill exchange platform where people exchange their time and knowledge instead of paying money.
+![SkillSwap Banner](https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80)
+
+[![React](https://img.shields.io/badge/Frontend-React_18_%7C_Vite-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![NodeJS](https://img.shields.io/badge/Backend-Node.js_%7C_Express-339933?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
+[![Socket.io](https://img.shields.io/badge/RealTime-Socket.io-010101?style=for-the-badge&logo=socket.dot.io)](https://socket.io/)
+[![TailwindCSS](https://img.shields.io/badge/Styling-TailwindCSS_Liquid_Glass-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Animations-Framer_Motion-FF0055?style=for-the-badge&logo=framer)](https://www.framer.com/motion/)
+
+**Exchange knowledge, barter skills, and grow together without money. 1 hour taught = 1 Time Credit earned.**
+
+</div>
 
 ---
 
-## 🌟 Vision & Core Concept
+## 🌟 Platform Highlights
 
-1. **Direct Skill Swaps**: Reciprocal 1-on-1 swaps (e.g. User A teaches User B C++ for 1 hour, User B teaches User A Photoshop for 1 hour).
-2. **Time Credit Economy**: Indirect skill exchanges using a time wallet system:
-   $$\text{Teach 1 hour} \rightarrow +1.0 \text{ Credit}$$
-   $$\text{Learn 1 hour} \rightarrow -1.0 \text{ Credit}$$
-   New users receive a signup gift of **2.0 Free Time Credits** so they can start learning immediately!
+SkillSwap is a reciprocal skill-sharing platform where community members trade talents through a **1-to-1 Time Banking system**. Whether learning Python, UX Design, Spanish, or Cooking, users exchange time, build trust ratings, and connect live via Google Meet.
+
+### ✨ Key Features
+
+- ⚡ **Time Credit Banking**:
+  - New users receive **+2.0 free initial credits**.
+  - Teaching 1 hour earns **+1.0 Time Credit**; learning transfers **1.0 Credit** to the mentor upon dual confirmation.
+- 🎯 **Smart Reciprocal Matching Engine**:
+  - Automatically matches users whose learning goals align with another user's teaching skills.
+- 🎥 **Integrated Google Meet & Calendar Reminders**:
+  - 1-click **Live Google Meet** creation for online video sessions.
+  - **📅 5-Minute Google Calendar Notification**: Pre-fills calendar invites with Google Meet URLs and 5-minute alerts.
+- 🌟 **5-Criterion Peer Rating & Trust Engine**:
+  - After sessions, peers evaluate mentors across 5 key dimensions:
+    1. 💡 *Explanation & Clarity*
+    2. 🎓 *Teaching Methodology*
+    3. 💬 *Communication Skill*
+    4. ⭐ *Behavior & Respect*
+    5. ⏰ *Punctuality & Reliability*
+  - Automatically recalculates **Trust Scores (0–100%)** and updates Leaderboard standing.
+- 📥 **Dedicated Swap Requests Workspace (`/requests`)**:
+  - Filter by **Incoming Requests**, **Sent Requests**, and **Active Accepted Swaps**.
+  - **Accept (`✓`)** or **Reject (`✕`)** swap requests with real-time status updates.
+  - **`🗑️ Clear Past Meetings`**: Easily clean completed/declined sessions from history.
+- 🏆 **Community Leaderboard**:
+  - Filter top mentors by category (Design, Tech, Languages, Arts, Music) and trust badges (e.g. *Top Mentor*, *Verified Pro*).
+- 💬 **Live Socket.io Direct Messaging**:
+  - Instant 1-on-1 peer messaging with read receipts and active typing indicators.
+- 💎 **Liquid Glassmorphism Aesthetic**:
+  - Built with frosted glass backdrops, dynamic glowing gradients, and fluid Framer Motion micro-animations.
 
 ---
 
-## 🏗 Monorepo Architecture
+## 🛠️ Technology Stack
 
-```text
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React 18, Vite, TailwindCSS, Framer Motion, Lucide React, Axios |
+| **Backend** | Node.js, Express.js, Socket.io, JSON Web Tokens (JWT), Bcrypt |
+| **Database** | MongoDB, Mongoose ORM |
+| **Design System** | Custom Liquid Glassmorphism, Specular Highlights, HSL Tailored Palettes |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+
+- **Node.js** >= v18.0.0
+- **MongoDB** running locally (`mongodb://127.0.0.1:27017/skillswap`) or MongoDB Atlas URI
+
+---
+
+### 2. Clone and Install Dependencies
+
+```bash
+# Clone the repository
+git clone https://github.com/<your-username>/skillswap.git
+cd skillswap
+
+# Install root & workspace dependencies
+npm install
+cd apps/web && npm install
+cd ../../server && npm install
+```
+
+---
+
+### 3. Configure Environment Variables
+
+Create `.env` inside the `server/` directory:
+
+```env
+PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://127.0.0.1:27017/skillswap
+JWT_SECRET=skillswap_ultra_secure_jwt_secret_key_2026_!@#
+JWT_EXPIRE=30d
+CLIENT_URL=http://localhost:5173
+```
+
+---
+
+### 4. Seed Database with Initial Test Data
+
+Populate pre-configured skills, top mentors, and sample sessions:
+
+```bash
+cd server
+node seed.js
+```
+
+> **Seeded Test Credentials**:
+> - **Sarah Jenkins**: `sarah@skillswap.dev` / `password123` *(UI/UX Designer)*
+> - **Vineet Kumar**: `vineet@skillswap.dev` / `password123` *(Full-Stack Developer)*
+> - **Admin User**: `admin@skillswap.dev` / `password123`
+
+---
+
+### 5. Run the Application
+
+Start backend & frontend concurrently:
+
+```bash
+# Terminal 1 — Express Backend API (Port 5000)
+cd server
+npm run start
+
+# Terminal 2 — Vite React Frontend (Port 5173)
+cd apps/web
+npm run dev
+```
+
+Open your browser at **[http://localhost:5173](http://localhost:5173)**.
+
+---
+
+## 📁 Repository Structure
+
+```
 skillswap/
 ├── apps/
-│   ├── web/               # React + Vite + Tailwind CSS + Framer Motion + Socket.IO + PWA
-│   │   ├── src/
-│   │   │   ├── api/        # Axios API Client
-│   │   │   ├── context/    # AuthContext & SocketContext
-│   │   │   ├── components/ # Navbar, Footer, MatchCard, TimeCreditBadge, LocationMapVisualizer, etc.
-│   │   │   └── pages/      # LandingPage, Dashboard, Discover, Matches, Sessions, Chat, Profile, Admin
-│   │   └── public/        # PWA manifest.json & sw.js
-│   │
-│   └── mobile/            # React Native + Expo + Expo Router + NativeWind + FloatingActionButton
-│       └── app/
-│           └── (tabs)/    # Home, Discover, Matches, Messages, Profile
-│
-├── server/                # Node.js + Express.js + Socket.IO + Mongoose
-│   ├── config/            # DB Connection with MongoDB Memory Server auto-fallback
-│   ├── controllers/       # Auth, User, Skill, Match, Session, Credit, Chat, Review, Admin
-│   ├── models/            # User, Skill, UserSkill, Match, Session, CreditTransaction, Chat, Review, Dispute
-│   ├── services/          # Multi-Factor Matching Engine & Trust Score Calculator
-│   ├── sockets/           # Real-Time Socket.IO Handler
-│   └── seed.js            # Comprehensive Seed Script
-│
-├── shared/                # Shared constants, categories, skill levels, and transaction types
-├── package.json           # Monorepo workspace configuration
-└── README.md              # Project documentation
+│   └── web/                   # Vite React Frontend
+│       ├── public/            # Static assets & PWA manifest
+│       └── src/
+│           ├── api/           # Axios HTTP client configuration
+│           ├── components/    # Reusable UI & Modal components
+│           │   ├── GlassDockNavbar.jsx
+│           │   ├── SwapRequestModal.jsx
+│           │   ├── PeerRatingModal.jsx
+│           │   ├── OnboardingWizard.jsx
+│           │   └── TimeCreditBadge.jsx
+│           ├── context/       # Auth & Socket.io Context providers
+│           └── pages/         # Page routes (Dashboard, Discover, Matches, Requests, Sessions, etc.)
+├── server/                    # Node.js Express REST API & WebSockets
+│   ├── config/                # MongoDB database connection
+│   ├── controllers/           # Route logic (Auth, Sessions, Reviews, Matches, Leaderboard)
+│   ├── middleware/            # JWT authentication & error handling
+│   ├── models/                # Mongoose Schema Models (User, Skill, Session, Review, etc.)
+│   ├── routes/                # Express API route declarations
+│   ├── services/              # Trust Score & Reciprocal Matching algorithms
+│   └── seed.js                # Database seeder script
+├── shared/                    # Shared constants across workspaces
+└── README.md
 ```
 
 ---
 
-## 🚀 Quick Setup & Local Execution
-
-### 1. Installation
-Install all root and workspace dependencies:
-
-```bash
-npm run install:all
-```
-
-### 2. Seed Database
-Populate database with 10+ demo users, 20+ core skills, reciprocal matches, sample sessions, credit transactions, reviews, and chat history:
-
-```bash
-npm run seed
-```
-
-### 3. Run Development Servers
-To run the backend Express server:
-```bash
-npm run dev:server
-```
-
-To run the React Web frontend (Vite):
-```bash
-npm run dev:web
-```
-
-To start the Expo Mobile application:
-```bash
-npm run dev:mobile
-```
-
----
-
-## ⚡ Time Credit & Anti-Fraud Engine
-
-- **Immutable Ledger**: Every credit balance update is logged in the `CreditTransaction` collection (`EARN`, `SPEND`, `BONUS`, `REFUND`, `PENALTY`).
-- **Dual Confirmation Rule**: Session credits (+1.0 to teacher, -1.0 from learner) are **ONLY** released when **BOTH** participants click "Confirm Session Completion" after finishing the meeting.
-- **Dispute System**: If a session goes wrong or experiences a no-show, users can open a dispute for admin review.
-
----
-
-## 🔍 Matching Algorithm
-
-Match scores (0–100%) are calculated dynamically based on:
-
-1. **Skill Compatibility (40%)**: Reciprocal 1-on-1 swap or 1-way demand match.
-2. **Availability Overlap (20%)**: Overlapping days of the week and time ranges.
-3. **Location / Distance (10%)**: Proximity in km calculated using the Haversine formula (< 5km = 100%).
-4. **Learning Preference (10%)**: Online vs In-person vs Both.
-5. **Skill Level Compatibility (10%)**: Teacher level >= Learner requested level.
-6. **Rating & Trust Score (10%)**: Peer reviews and trust score gauge.
-
----
-
-## 📡 API Endpoint Reference
+## 📡 API Endpoints Overview
 
 | Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/api/auth/register` | User signup + 2.0 Time Credits bonus |
-| `POST` | `/api/auth/login` | JWT sign in |
-| `GET` | `/api/auth/me` | Fetch authenticated profile |
-| `GET` | `/api/skills` | List centralized skills directory |
-| `POST` | `/api/skills` | Submit skill / AI skill normalization |
-| `GET` | `/api/matches` | Run multi-factor matching engine |
-| `GET` | `/api/sessions` | Fetch user upcoming & completed sessions |
-| `POST` | `/api/sessions/request` | Schedule session request |
-| `PATCH` | `/api/sessions/:id/confirm` | Dual-confirmation credit release |
-| `GET` | `/api/credits/wallet` | Fetch Time Credit balance & ledger history |
-| `GET` | `/api/chat/conversations` | Get active chat threads |
-| `POST` | `/api/chat/messages` | Send real-time message |
-| `POST` | `/api/reviews` | Submit post-session review & rating |
-| `GET` | `/api/admin/stats` | Platform overview metrics (Admin only) |
+| :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Register new user account (+2.0 Time Credits) |
+| `POST` | `/api/auth/login` | Email & password authentication |
+| `GET` | `/api/users/profile` | Retrieve logged-in user profile & skills |
+| `GET` | `/api/matches` | Retrieve reciprocal peer mentor matches |
+| `GET` | `/api/sessions` | List user sessions (requests, active, completed) |
+| `POST` | `/api/sessions/request` | Initiate a new skill swap session |
+| `PATCH` | `/api/sessions/:id/respond` | Accept or Decline a swap request |
+| `PATCH` | `/api/sessions/:id/confirm` | Confirm session completion & transfer credits |
+| `DELETE` | `/api/sessions/:id` | Clear specific session from history |
+| `DELETE` | `/api/sessions/clear-past` | Clear all past/declined meetings |
+| `POST` | `/api/reviews` | Submit 5-criterion peer rating & update Trust Score |
+| `GET` | `/api/leaderboard` | Top mentors ranked by trust score and hours taught |
 
 ---
 
-## 🌐 Deployment Instructions
+## 📜 License
 
-- **Web Frontend**: Deploy `apps/web` to **Vercel** or **Netlify**.
-- **Backend API**: Deploy `server` to **Render**, **Railway**, or **Fly.io**.
-- **Database**: Connect to **MongoDB Atlas** database cluster.
-- **Mobile Application**: Build and publish via **Expo Application Services (EAS)**.
-
----
-
-## 🛡 Privacy & Security
-
-- Password hashing using **bcryptjs** (salt factor 10).
-- JWT authentication with secure HTTP-only cookies on web and SecureStore on mobile.
-- Approximate distance calculation; **never** exposes exact user home addresses.
-- Rate limiting, Helmet security headers, CORS protection, and input sanitization.
+Distributed under the **MIT License**. Free to use, modify, and distribute.
