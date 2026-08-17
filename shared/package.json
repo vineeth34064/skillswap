@@ -1,0 +1,7 @@
+{
+  "name": "@skillswap/shared",
+  "version": "1.0.0",
+  "description": "Shared constants and utility functions for SkillSwap",
+  "main": "constants.js",
+  "license": "MIT"
+}

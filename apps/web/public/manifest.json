@@ -1,0 +1,15 @@
+{
+  "short_name": "SkillSwap",
+  "name": "SkillSwap — Peer-to-Peer Skill Exchange",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#F8FAFC",
+  "theme_color": "#6366F1",
+  "display": "standalone"
+}
