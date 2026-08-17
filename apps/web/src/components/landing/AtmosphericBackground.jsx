@@ -4,20 +4,20 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const AtmosphericBackground = () => {
   const [cursorPos, setCursorPos] = useState({ x: -500, y: -500 });
 
-  // Scroll-driven background color interpolation across sections
+  // Scroll-driven dark blue background color interpolation across sections
   const { scrollYProgress } = useScroll();
 
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.15, 0.32, 0.48, 0.65, 0.82, 1],
     [
-      '#101827', // Hero: Midnight Navy
-      '#141D32', // Skills: Indigo Navy
-      '#101C2D', // Match: Violet Navy
-      '#1B1C29', // Time: Warm Midnight
-      '#101C2D', // Session: Blue Midnight
-      '#111B30', // Network: Indigo Blue
-      '#0B1220'  // Final CTA: Deep Midnight
+      '#080E24', // Hero: Deep Dark Blue
+      '#0A1330', // Skills: Midnight Sapphire Blue
+      '#09122C', // Match: Royal Dark Blue
+      '#0D183E', // Time: Deep Indigo Dark Blue
+      '#08102B', // Session: Ocean Midnight Blue
+      '#0A1435', // Network: Midnight Dark Blue
+      '#060B1C'  // Final CTA: Deep Dark Blue Abyss
     ]
   );
 

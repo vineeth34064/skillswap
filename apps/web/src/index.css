@@ -4,7 +4,7 @@
 
 @layer base {
   html, body {
-    background-color: #101827;
+    background-color: #080E24; /* Deep Dark Blue */
     color: #F7F9FC;
     font-family: 'Inter', 'Geist', sans-serif;
     overflow-x: hidden;
@@ -16,27 +16,27 @@
 
 /* Smoked Crystal Liquid Glass Material System */
 .liquid-glass-base {
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(28px) saturate(150%);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  background: rgba(14, 26, 58, 0.55);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 25px 80px rgba(8, 15, 30, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 80px rgba(4, 8, 20, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .liquid-glass-premium {
-  background: rgba(255, 255, 255, 0.13);
-  backdrop-filter: blur(35px) saturate(160%);
-  -webkit-backdrop-filter: blur(35px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  box-shadow: 0 25px 80px rgba(8, 15, 30, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  background: rgba(16, 30, 68, 0.65);
+  backdrop-filter: blur(35px) saturate(170%);
+  -webkit-backdrop-filter: blur(35px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 25px 80px rgba(4, 8, 20, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 .liquid-glass-highlight {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.14),
-    rgba(255, 255, 255, 0.03) 45%,
-    rgba(255, 255, 255, 0.06)
+    rgba(255, 255, 255, 0.16),
+    rgba(14, 26, 58, 0.3) 45%,
+    rgba(255, 255, 255, 0.08)
   );
 }
 
@@ -52,7 +52,7 @@
   inset: 0;
   background: radial-gradient(
     400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.15),
     transparent 50%
   );
   pointer-events: none;

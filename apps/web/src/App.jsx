@@ -56,7 +56,7 @@ const AppContent = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#101827] text-[#F7F9FC] relative selection:bg-[#8B7CFF] selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#080E24] text-[#F7F9FC] relative selection:bg-[#8B7CFF] selection:text-white">
       <ScrollProgressBar />
       <AmbientBackground />
       
