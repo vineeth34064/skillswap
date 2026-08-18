@@ -70,6 +70,16 @@ app.use('/api/leaderboard', require('./routes/leaderboardRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    status: 'online',
+    platform: 'SkillSwap API',
+    version: '1.0.0',
+    timestamp: new Date()
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({
