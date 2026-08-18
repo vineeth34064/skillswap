@@ -36,7 +36,7 @@ const SessionSimulator = () => {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-[#72C7FF]/40 text-[#72C7FF] text-xs sm:text-sm font-mono font-bold shadow-blue-glow">
             <Video className="w-4 h-4" /> 1-to-1 Live Video Environment
           </div>
-          <h2 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.02]">
+          <h2 className="text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.08]">
             How a Session <span className="text-[#72C7FF] drop-shadow-[0_0_35px_rgba(114,199,255,0.45)]">Feels</span>
           </h2>
           <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">

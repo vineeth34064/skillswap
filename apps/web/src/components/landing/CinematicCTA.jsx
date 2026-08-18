@@ -22,7 +22,7 @@ const CinematicCTA = () => {
             <Sparkles className="w-4 h-4 text-[#D6B36A]" /> The Invitation
           </div>
 
-          <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-black text-white tracking-tight leading-[1.0] font-sans">
+          <h2 className="text-[2.6rem] sm:text-6xl md:text-8xl lg:text-[7.5rem] font-black text-white tracking-tight leading-[1.05] font-sans">
             EXCHANGE SKILLS. <br />
             <span className="accent-gradient-rare drop-shadow-[0_0_40px_rgba(214,179,106,0.5)]">NOT MONEY.</span>
           </h2>

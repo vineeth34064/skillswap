@@ -27,7 +27,7 @@ const SpatialSkillNetwork = () => {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs sm:text-sm font-mono font-bold shadow-sm">
             <Sparkles className="w-4 h-4 text-[#8B7CFF]" /> Living Knowledge Web
           </div>
-          <h2 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.02]">
+          <h2 className="text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.08]">
             The SkillSwap <span className="accent-gradient-rare drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">Network</span>
           </h2>
           <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">
@@ -158,14 +158,16 @@ const SpatialSkillNetwork = () => {
         </div>
 
         {/* CTA */}
-        <div className="pt-6 flex justify-center">
-          <button
+        <div className="pt-8 flex justify-center">
+          <motion.button
             onClick={() => navigate('/register')}
-            className="px-10 py-4.5 rounded-full accent-gradient-bg text-[#05070A] font-black text-sm sm:text-base shadow-glow hover:scale-105 transition-all flex items-center gap-3 cursor-pointer"
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-10 sm:px-14 py-5 sm:py-6 rounded-full accent-gradient-bg text-[#05070A] font-black text-base sm:text-lg shadow-glow transition-all flex items-center justify-center gap-3.5 cursor-pointer group"
           >
-            <span>Join the SkillSwap Network</span>
-            <ArrowRight className="w-5 h-5 text-[#05070A]" />
-          </button>
+            <span>JOIN THE NETWORK</span>
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#05070A] group-hover:translate-x-1.5 transition-transform" />
+          </motion.button>
         </div>
 
       </div>
