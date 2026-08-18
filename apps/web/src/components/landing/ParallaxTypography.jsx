@@ -20,13 +20,13 @@ const ParallaxTypography = () => {
     damping: 26
   });
 
-  const xLeft = useTransform(smoothProgress, [0, 0.5, 1], [-180, 0, 180]);
-  const xRight = useTransform(smoothProgress, [0, 0.5, 1], [180, 0, -180]);
-  const scaleCenter = useTransform(smoothProgress, [0.1, 0.5, 0.9], [0.85, 1, 0.85]);
+  const xLeft = useTransform(smoothProgress, [0, 0.5, 1], [-80, 0, 80]);
+  const xRight = useTransform(smoothProgress, [0, 0.5, 1], [80, 0, -80]);
+  const scaleCenter = useTransform(smoothProgress, [0.1, 0.5, 0.9], [0.9, 1, 0.9]);
   const opacityCenter = useTransform(smoothProgress, [0.15, 0.5, 0.85], [0.3, 1, 0.3]);
 
   return (
-    <section id="everyone-knows" ref={containerRef} className="py-28 sm:py-36 relative overflow-hidden">
+    <section id="everyone-knows" ref={containerRef} className="py-24 sm:py-36 relative overflow-hidden">
       
       {/* Background Soft Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#8B7CFF]/12 rounded-full blur-[140px] pointer-events-none" />
@@ -34,24 +34,24 @@ const ParallaxTypography = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 text-center relative z-10">
         
         {/* Parallax Typography Split Lines with Dynamic Directions */}
-        <div className="space-y-3 sm:space-y-4 select-none overflow-hidden py-4">
+        <div className="space-y-2.5 sm:space-y-4 select-none overflow-hidden py-4">
           <motion.div
             style={{ x: xLeft }}
-            className="text-6xl sm:text-8xl md:text-9xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tighter text-white/90 font-mono leading-none"
+            className="text-4xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white/90 font-mono leading-none"
           >
             EVERYONE
           </motion.div>
 
           <motion.div
             style={{ x: xRight }}
-            className="text-6xl sm:text-8xl md:text-9xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tighter accent-gradient-rare leading-none"
+            className="text-4xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight accent-gradient-rare leading-none"
           >
             KNOWS
           </motion.div>
 
           <motion.div
             style={{ scale: scaleCenter, opacity: opacityCenter }}
-            className="text-6xl sm:text-8xl md:text-9xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tighter text-white leading-none"
+            className="text-4xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white leading-none"
           >
             SOMETHING.
           </motion.div>

@@ -76,7 +76,7 @@ const ImmersiveHero = ({ onOpenAuth }) => {
               initial={{ y: '100%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[7.2rem] font-black tracking-tight leading-[0.93] text-white"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[7.2rem] font-black tracking-tight leading-[0.95] text-white"
             >
               YOUR KNOWLEDGE
             </motion.h1>
@@ -84,7 +84,7 @@ const ImmersiveHero = ({ onOpenAuth }) => {
               initial={{ y: '100%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
               transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[7.2rem] font-black tracking-tight leading-[0.93] text-white flex items-center gap-4 sm:gap-6"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[7.2rem] font-black tracking-tight leading-[0.95] text-white flex items-center gap-3 sm:gap-6"
             >
               <span>HAS</span>
               <span className="accent-gradient-text drop-shadow-[0_0_40px_rgba(139,124,255,0.5)]">VALUE.</span>
