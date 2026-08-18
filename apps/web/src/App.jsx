@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SocketProvider } from './context/SocketContext';
 import GlassDockNavbar from './components/GlassDockNavbar';
-import Footer from './components/Footer';
 import AuthModal from './components/AuthModal';
 import OnboardingWizard from './components/OnboardingWizard';
 import AmbientBackground from './components/AmbientBackground';
@@ -80,8 +79,6 @@ const AppContent = () => {
       <main className="flex-1 relative z-10 pt-16 sm:pt-20 pb-12 w-full">
         <AppRoutes onOpenAuth={handleOpenAuth} onOpenOnboarding={() => setOnboardingOpen(true)} />
       </main>
-
-      <Footer />
 
       <AuthModal
         isOpen={authModalOpen}
