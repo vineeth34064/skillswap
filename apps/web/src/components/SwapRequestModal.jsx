@@ -55,15 +55,13 @@ const SwapRequestModal = ({ isOpen, onClose, targetUser, onSuccess }) => {
     setLoading(true);
 
     try {
-      const finalMeetLink = customMeetUrl.trim() || 'https://meet.google.com/new';
-
       const payload = {
         partnerId: targetUser._id,
         skillId: skillId || undefined,
         durationHours: Number(durationHours),
         scheduledAt: new Date(scheduledAt).toISOString(),
         mode,
-        meetingLink: finalMeetLink,
+        meetingLink: customMeetUrl.trim() ? customMeetUrl.trim() : undefined,
         notes
       };
 

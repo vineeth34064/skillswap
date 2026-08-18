@@ -1,6 +1,7 @@
 import React from 'react';
 import AtmosphericBackground from '../components/landing/AtmosphericBackground';
 import CustomCursor from '../components/landing/CustomCursor';
+import SectionNavigator from '../components/landing/SectionNavigator';
 import ImmersiveHero from '../components/landing/ImmersiveHero';
 import ParallaxTypography from '../components/landing/ParallaxTypography';
 import InteractiveSkillSimulator from '../components/landing/InteractiveSkillSimulator';
@@ -16,15 +17,18 @@ const LandingPage = ({ onOpenAuth }) => {
   return (
     <div className="relative text-[#F7F9FC] selection:bg-[#8B7CFF] selection:text-white min-h-screen">
       
-      {/* Dynamic Premium Atmospheric Background */}
+      {/* Dynamic Premium Atmospheric Background with Scroll Color Interpolation */}
       <AtmosphericBackground />
 
       {/* Custom Desktop Magnetic Cursor */}
       <CustomCursor />
 
-      {/* Page Sections Canvas */}
+      {/* Desktop Section Scroll Indicator Navigator */}
+      <SectionNavigator />
+
+      {/* Continuous Page Sections Narrative */}
       <div className="relative z-10">
-        {/* 1. HERO Hook */}
+        {/* 1. HERO Hook (Layered Depth Parallax) */}
         <ImmersiveHero onOpenAuth={onOpenAuth} />
 
         {/* 2. EVERYONE KNOWS SOMETHING Typographic Parallax */}
@@ -33,7 +37,7 @@ const LandingPage = ({ onOpenAuth }) => {
         {/* 3 & 4. Interactive WHAT DO YOU KNOW / WANT TO LEARN Simulator */}
         <InteractiveSkillSimulator />
 
-        {/* 5. Animated Reciprocal Match Reveal */}
+        {/* 5. Animated Reciprocal Match Reveal (Convergence Physics) */}
         <AnimatedMatchReveal />
 
         {/* 6 & 7. Time Credit Economy & 3D Glass Wallet */}

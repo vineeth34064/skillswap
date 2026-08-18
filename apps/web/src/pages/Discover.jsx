@@ -65,13 +65,21 @@ const Discover = () => {
 
   const filteredMatches = matches
     .filter((match) => {
-      const q = search.toLowerCase();
-      const matchesCategory = selectedCategory === 'All' || match.user?.category === selectedCategory;
+      const q = search.trim().toLowerCase();
+      const matchesCategory =
+        selectedCategory === 'All' ||
+        match.teachesSkills?.some((s) => s.category === selectedCategory) ||
+        match.wantsSkills?.some((s) => s.category === selectedCategory);
+
       const matchesSearch =
         !q ||
         match.user?.name?.toLowerCase().includes(q) ||
-        match.user?.teachSkills?.some((s) => s.skillId?.name?.toLowerCase().includes(q)) ||
-        match.user?.learnSkills?.some((s) => s.skillId?.name?.toLowerCase().includes(q));
+        match.user?.username?.toLowerCase().includes(q) ||
+        match.user?.city?.toLowerCase().includes(q) ||
+        match.teachesSkills?.some((s) => s.name?.toLowerCase().includes(q)) ||
+        match.wantsSkills?.some((s) => s.name?.toLowerCase().includes(q)) ||
+        match.user?.teachSkills?.some((s) => (s.skillId?.name || s.name || '').toLowerCase().includes(q)) ||
+        match.user?.learnSkills?.some((s) => (s.skillId?.name || s.name || '').toLowerCase().includes(q));
 
       return matchesCategory && matchesSearch;
     })

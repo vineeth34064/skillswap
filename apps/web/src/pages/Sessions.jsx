@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 import LiquidGlassCard from '../components/LiquidGlassCard';
 import TimeCreditBadge from '../components/TimeCreditBadge';
 import PeerRatingModal from '../components/PeerRatingModal';
@@ -9,6 +10,7 @@ import { Calendar, Video, Clock, CheckCircle2, Plus, ShieldAlert, Check, Sparkle
 
 const Sessions = () => {
   const { user, refreshUser } = useAuth();
+  const { socket } = useSocket();
   const location = useLocation();
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,7 +29,7 @@ const Sessions = () => {
   const [scheduledAt, setScheduledAt] = useState('');
   const [durationHours, setDurationHours] = useState(1.0);
   const [mode, setMode] = useState('Online');
-  const [meetingLink, setMeetingLink] = useState('https://meet.google.com/new');
+  const [meetingLink, setMeetingLink] = useState('');
   const [notes, setNotes] = useState('');
   const [formMsg, setFormMsg] = useState('');
 
@@ -48,6 +50,27 @@ const Sessions = () => {
       if (res.success) setUserSkills(res.skills);
     }).catch(console.error);
 
+    if (socket) {
+      socket.on('session_updated', () => {
+        fetchSessions();
+      });
+      socket.on('session_status_changed', () => {
+        fetchSessions();
+      });
+    }
+
+    const interval = setInterval(fetchSessions, 8000);
+
+    return () => {
+      if (socket) {
+        socket.off('session_updated');
+        socket.off('session_status_changed');
+      }
+      clearInterval(interval);
+    };
+  }, [socket]);
+
+  useEffect(() => {
     if (location.state?.targetUser) {
       setShowNewModal(true);
       setTargetPartner(location.state.targetUser);

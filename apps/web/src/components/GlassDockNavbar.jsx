@@ -37,6 +37,17 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
     }
   }, [user, location.pathname]);
 
+  const handleLogoClick = (e) => {
+    setMobileMenuOpen(false);
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const handleSectionClick = (e, sectionId) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -44,25 +55,26 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
       navigate('/');
       setTimeout(() => {
         const el = document.getElementById(sectionId);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 200);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
     } else {
       const el = document.getElementById(sectionId);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   return (
     <>
       <header className="fixed top-3 sm:top-4 left-0 right-0 z-50 px-2 sm:px-4 w-full max-w-[98%] sm:max-w-[96%] mx-auto pointer-events-none">
-        <div className="pointer-events-auto rounded-2xl sm:rounded-full px-4 sm:px-6 lg:px-8 py-3 border border-white/25 shadow-[0_15px_50px_rgba(0,0,0,0.6),0_0_35px_rgba(139,124,255,0.2)] flex items-center justify-between transition-all duration-300 hover:border-white/40 backdrop-blur-2xl bg-[#0D1524]/85 relative overflow-hidden">
+        <div className="pointer-events-auto rounded-2xl sm:rounded-full px-4 sm:px-6 lg:px-8 py-3 border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_20px_rgba(139,124,255,0.12)] flex items-center justify-between transition-all duration-300 hover:border-white/35 backdrop-blur-2xl bg-white/[0.05] hover:bg-white/[0.08] relative overflow-hidden">
           
           {/* Glass Specular Top Highlight */}
-          <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
 
           {/* Brand Logo */}
           <Link
             to="/"
+            onClick={handleLogoClick}
             onMouseEnter={() => setLogoHovered(true)}
             onMouseLeave={() => setLogoHovered(false)}
             className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink-0"
@@ -269,7 +281,7 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-x-2 top-20 z-40 lg:hidden p-5 rounded-3xl liquid-glass-premium border border-white/25 bg-[#0D1524]/95 shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-3xl space-y-4 max-h-[82vh] overflow-y-auto custom-scrollbar"
+            className="fixed inset-x-2 top-20 z-40 lg:hidden p-5 rounded-3xl liquid-glass-premium border border-white/20 bg-[#0D1524]/75 shadow-[0_20px_60px_rgba(0,0,0,0.7)] backdrop-blur-3xl space-y-4 max-h-[82vh] overflow-y-auto custom-scrollbar"
           >
             {user ? (
               <div className="space-y-4">

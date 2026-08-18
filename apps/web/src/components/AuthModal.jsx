@@ -51,14 +51,14 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', onCompleteOnboardin
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#05070A]/85 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md liquid-glass-base rounded-3xl border border-white/20 bg-[#070A0F]/90 backdrop-blur-2xl shadow-glass-3d overflow-hidden text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#05070A]/80 backdrop-blur-xl animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md rounded-3xl border border-white/20 bg-white/[0.06] hover:bg-white/[0.08] backdrop-blur-3xl shadow-[0_25px_70px_rgba(0,0,0,0.7),0_0_35px_rgba(139,124,255,0.2)] overflow-hidden text-white transition-all">
         
         {/* Header gradient banner */}
-        <div className="p-6 relative border-b border-white/10 bg-gradient-to-r from-[#8B7CFF]/20 via-[#05070A] to-[#72C7FF]/20">
+        <div className="p-6 relative border-b border-white/10 bg-gradient-to-r from-[#8B7CFF]/15 via-transparent to-[#72C7FF]/15">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/15"
+            className="absolute top-4 right-4 p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/15 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -97,7 +97,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', onCompleteOnboardin
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Vineet Kumar"
-                  className="w-full px-4 py-2.5 rounded-2xl liquid-glass-base border border-white/10 bg-[#05070A] text-white text-xs placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]/50"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                 />
               </div>
 
@@ -109,7 +109,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', onCompleteOnboardin
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="e.g. vineet_dev"
-                  className="w-full px-4 py-2.5 rounded-2xl liquid-glass-base border border-white/10 bg-[#05070A] text-white text-xs placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]/50"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                 />
               </div>
 
@@ -120,7 +120,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', onCompleteOnboardin
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="e.g. New York"
-                  className="w-full px-4 py-2.5 rounded-2xl liquid-glass-base border border-white/10 bg-[#05070A] text-white text-xs placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]/50"
+                  className="w-full px-4 py-2.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                 />
               </div>
             </>
@@ -136,7 +136,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', onCompleteOnboardin
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={mode === 'register' ? 'vineet@example.com' : 'vineet@example.com or @vineet'}
-              className="w-full px-4 py-2.5 rounded-2xl liquid-glass-base border border-white/10 bg-[#05070A] text-white text-xs placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]/50"
+              className="w-full px-4 py-2.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
             />
           </div>
 
@@ -148,14 +148,14 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', onCompleteOnboardin
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 rounded-2xl liquid-glass-base border border-white/10 bg-[#05070A] text-white text-xs placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]/50"
+              className="w-full px-4 py-2.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 accent-gradient-bg text-[#05070A] font-extrabold rounded-2xl shadow-glow hover:scale-[1.02] transition-all disabled:opacity-50 text-xs flex items-center justify-center gap-2 mt-2"
+            className="w-full py-3 px-4 accent-gradient-bg text-[#05070A] font-extrabold rounded-2xl shadow-glow hover:scale-[1.02] transition-all disabled:opacity-50 text-xs flex items-center justify-center gap-2 mt-2 cursor-pointer"
           >
             {loading ? (
               <span className="animate-pulse">Authenticating...</span>
@@ -173,25 +173,26 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login', onCompleteOnboardin
                 <button
                   type="button"
                   onClick={() => setMode('register')}
-                  className="font-bold text-[#D6B36A] hover:underline"
+                  className="font-bold text-[#D6B36A] hover:underline cursor-pointer"
                 >
                   Join now
                 </button>
               </p>
             ) : (
               <p>
-                Already registered?{' '}
+                Already have an account?{' '}
                 <button
                   type="button"
                   onClick={() => setMode('login')}
-                  className="font-bold text-[#D6B36A] hover:underline"
+                  className="font-bold text-[#D6B36A] hover:underline cursor-pointer"
                 >
-                  Log in
+                  Sign in
                 </button>
               </p>
             )}
           </div>
         </form>
+
       </div>
     </div>
   );

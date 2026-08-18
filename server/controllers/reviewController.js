@@ -7,6 +7,11 @@ const { updateTrustScore } = require('../services/trustScoreCalculator');
 
 const createReview = async (req, res, next) => {
   try {
+    const reviewerId = req.user?._id;
+    if (!reviewerId) {
+      return res.status(401).json({ success: false, message: 'Authentication required to submit review' });
+    }
+
     let {
       targetUserId,
       sessionId,
@@ -18,11 +23,14 @@ const createReview = async (req, res, next) => {
       comment
     } = req.body;
 
-    const reviewerId = req.user._id;
+    const isValidObjectId = (id) => id && typeof id === 'string' && /^[0-9a-fA-F]{24}$/.test(id);
+
+    // Sanitize sessionId
+    const finalSessionId = isValidObjectId(String(sessionId)) ? sessionId : null;
 
     // Auto-detect targetUserId from sessionId if targetUserId was missing
-    if ((!targetUserId || targetUserId === 'undefined') && sessionId) {
-      const sessionObj = await Session.findById(sessionId);
+    if ((!targetUserId || targetUserId === 'undefined') && finalSessionId) {
+      const sessionObj = await Session.findById(finalSessionId);
       if (sessionObj) {
         targetUserId = sessionObj.hostId.toString() === reviewerId.toString()
           ? sessionObj.participantId
@@ -35,8 +43,14 @@ const createReview = async (req, res, next) => {
       targetUserId = targetUserId._id || targetUserId.id || targetUserId;
     }
 
-    if (!targetUserId) {
-      // Fallback to finding any alternate user if still missing
+    if (targetUserId && !isValidObjectId(String(targetUserId))) {
+      const userByUsername = await User.findOne({ username: String(targetUserId).toLowerCase() });
+      if (userByUsername) {
+        targetUserId = userByUsername._id;
+      }
+    }
+
+    if (!targetUserId || !isValidObjectId(String(targetUserId))) {
       const altUser = await User.findOne({ _id: { $ne: reviewerId } });
       if (altUser) targetUserId = altUser._id;
     }
@@ -49,59 +63,72 @@ const createReview = async (req, res, next) => {
 
     const overallRating = Number(((exp + teach + comm + beh + rel) / 5).toFixed(1));
 
-    // Use findOneAndUpdate with upsert so re-submitting updates the review cleanly instead of throwing duplicate key error
-    const filterQuery = sessionId 
-      ? { sessionId, reviewerId }
+    const filterQuery = finalSessionId 
+      ? { sessionId: finalSessionId, reviewerId }
       : { reviewerId, targetUserId };
 
     const review = await Review.findOneAndUpdate(
       filterQuery,
       {
-        reviewerId,
-        targetUserId,
-        sessionId: sessionId || null,
-        rating: overallRating,
-        knowledge: exp,
-        teachingQuality: teach,
-        communication: comm,
-        behavior: beh,
-        reliability: rel,
-        comment: comment || 'Great skill swap session!'
+        $set: {
+          reviewerId,
+          targetUserId,
+          sessionId: finalSessionId,
+          rating: overallRating,
+          knowledge: exp,
+          teachingQuality: teach,
+          communication: comm,
+          behavior: beh,
+          reliability: rel,
+          comment: comment || 'Great skill swap session!'
+        }
       },
-      { upsert: true, new: true }
+      { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
     // Update target user aggregate ratings and trust score if targetUserId exists
     if (targetUserId) {
-      const allReviews = await Review.find({ targetUserId });
-      const totalRating = allReviews.reduce((sum, r) => sum + r.rating, 0);
-      const avgRating = Number((totalRating / (allReviews.length || 1)).toFixed(1));
+      try {
+        const allReviews = await Review.find({ targetUserId });
+        const totalRating = allReviews.reduce((sum, r) => sum + r.rating, 0);
+        const avgRating = Number((totalRating / (allReviews.length || 1)).toFixed(1));
 
-      const targetUser = await User.findById(targetUserId);
-      if (targetUser) {
-        targetUser.rating = avgRating;
-        targetUser.reviewCount = allReviews.length;
-        await targetUser.save();
+        const targetUser = await User.findById(targetUserId);
+        if (targetUser) {
+          targetUser.rating = avgRating;
+          targetUser.reviewCount = allReviews.length;
+          await targetUser.save();
 
-        // Award Top Mentor badge if rating >= 4.8 and reviewCount >= 3
-        if (avgRating >= 4.8 && allReviews.length >= 3) {
-          await UserBadge.updateOne(
-            { userId: targetUserId, badgeCode: 'TOP_MENTOR' },
-            { userId: targetUserId, badgeCode: 'TOP_MENTOR' },
-            { upsert: true }
-          );
+          // Award Top Mentor badge if rating >= 4.8 and reviewCount >= 3
+          if (avgRating >= 4.8 && allReviews.length >= 3) {
+            try {
+              await UserBadge.updateOne(
+                { userId: targetUserId, badgeCode: 'TOP_MENTOR' },
+                { $set: { userId: targetUserId, badgeCode: 'TOP_MENTOR', awardedAt: new Date() } },
+                { upsert: true }
+              );
+            } catch (bErr) {
+              console.warn('Badge upsert warning:', bErr.message);
+            }
+          }
+
+          await updateTrustScore(targetUserId);
+
+          // Notify user about peer rating
+          try {
+            await Notification.create({
+              userId: targetUserId,
+              title: `Peer Review Received! ⭐ ${overallRating}/5.0`,
+              message: `${req.user.name} rated your session ${overallRating}/5 stars. Your trust score and rank have been updated!`,
+              type: 'REVIEW_RECEIVED',
+              link: `/profile/${targetUser.username}`
+            });
+          } catch (notifErr) {
+            console.warn('Review notification warning:', notifErr.message);
+          }
         }
-
-        await updateTrustScore(targetUserId);
-
-        // Notify user about peer rating
-        await Notification.create({
-          userId: targetUserId,
-          title: `Peer Review Received! ⭐ ${overallRating}/5.0`,
-          message: `${req.user.name} rated your session ${overallRating}/5 stars. Your trust score and rank have been updated!`,
-          type: 'REVIEW_RECEIVED',
-          link: `/profile/${targetUser.username}`
-        });
+      } catch (calcErr) {
+        console.warn('Target user rating update warning:', calcErr.message);
       }
     }
 

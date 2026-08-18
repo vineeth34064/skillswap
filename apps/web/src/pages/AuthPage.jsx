@@ -126,10 +126,10 @@ const AuthPage = ({ onOpenOnboarding }) => {
 
         {/* Right Column: Full Liquid Glass Auth Form Card */}
         <div className="lg:col-span-6">
-          <SpotlightCard level="supreme" className="p-8 sm:p-10 space-y-6 relative border-white/25 bg-[#101827]/95 backdrop-blur-3xl rounded-3xl shadow-glass-3d">
+          <div className="p-8 sm:p-10 space-y-6 relative border border-white/20 bg-white/[0.05] hover:bg-white/[0.08] backdrop-blur-3xl rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_30px_rgba(139,124,255,0.15)] transition-all">
             
             {/* Mode Switcher Tabs */}
-            <div className="flex items-center gap-2 p-1.5 rounded-2xl liquid-glass-base border border-white/15 bg-[#0D1524]">
+            <div className="flex items-center gap-2 p-1.5 rounded-2xl liquid-glass-base border border-white/15 bg-white/[0.04] backdrop-blur-md">
               <button
                 type="button"
                 onClick={() => { setIsRegister(false); setError(''); }}
@@ -188,7 +188,7 @@ const AuthPage = ({ onOpenOnboarding }) => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="e.g. Vineet Kumar"
-                        className="w-full pl-11 pr-4 py-3.5 rounded-2xl liquid-glass-base border border-white/20 bg-[#0D1524] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]"
+                        className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                       />
                     </div>
                   </div>
@@ -202,7 +202,7 @@ const AuthPage = ({ onOpenOnboarding }) => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="e.g. vineet_dev"
-                        className="w-full px-4 py-3.5 rounded-2xl liquid-glass-base border border-white/20 bg-[#0D1524] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]"
+                        className="w-full px-4 py-3.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                       />
                     </div>
                     <div>
@@ -212,7 +212,7 @@ const AuthPage = ({ onOpenOnboarding }) => {
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         placeholder="e.g. New York"
-                        className="w-full px-4 py-3.5 rounded-2xl liquid-glass-base border border-white/20 bg-[#0D1524] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]"
+                        className="w-full px-4 py-3.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                       />
                     </div>
                   </div>
@@ -231,7 +231,7 @@ const AuthPage = ({ onOpenOnboarding }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={isRegister ? 'vineet@example.com' : 'vineet@example.com or @vineet'}
-                    className="w-full pl-11 pr-4 py-3.5 rounded-2xl liquid-glass-base border border-white/20 bg-[#0D1524] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                   />
                 </div>
               </div>
@@ -246,7 +246,7 @@ const AuthPage = ({ onOpenOnboarding }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full pl-11 pr-4 py-3.5 rounded-2xl liquid-glass-base border border-white/20 bg-[#0D1524] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF]"
+                    className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-white/20 bg-white/[0.04] text-white text-sm sm:text-base placeholder-[#718096] focus:outline-none focus:ring-2 focus:ring-[#8B7CFF] focus:bg-white/[0.08] backdrop-blur-md transition-all"
                   />
                 </div>
               </div>
@@ -254,38 +254,37 @@ const AuthPage = ({ onOpenOnboarding }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 accent-gradient-bg text-[#101827] font-black rounded-2xl shadow-glow hover:scale-[1.02] transition-all disabled:opacity-50 text-sm sm:text-base flex items-center justify-center gap-2 mt-4 cursor-pointer"
+                className="w-full py-4 rounded-2xl accent-gradient-bg text-[#101827] font-black text-sm sm:text-base shadow-glow hover:scale-[1.02] transition-all flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:opacity-50"
               >
                 {loading ? (
                   <span className="animate-pulse">Authenticating...</span>
-                ) : !isRegister ? (
-                  <>Sign In to SkillSwap <ArrowRight className="w-5 h-5 text-[#101827]" /></>
                 ) : (
-                  <>Create Account & Set Skills <Sparkles className="w-5 h-5 text-[#101827]" /></>
+                  <>
+                    <span>{!isRegister ? 'Sign In' : 'Create Account & Set Skills'}</span>
+                    <Sparkles className="w-4 h-4 text-[#101827]" />
+                  </>
                 )}
               </button>
 
             </form>
 
-            <div className="pt-4 border-t border-white/10 text-center text-sm text-[#B0BAC9]">
+            <div className="pt-4 border-t border-white/10 text-center text-xs sm:text-sm text-[#B0BAC9]">
               {!isRegister ? (
                 <p>
                   New to SkillSwap?{' '}
                   <button
-                    type="button"
-                    onClick={() => setIsRegister(true)}
-                    className="font-black text-[#D6B36A] hover:underline ml-1 cursor-pointer"
+                    onClick={() => { setIsRegister(true); setError(''); }}
+                    className="font-extrabold text-[#D6B36A] hover:underline cursor-pointer ml-1"
                   >
-                    Join now & set skills (+2.0 credits)
+                    Create Account (+2.0 Free Credits)
                   </button>
                 </p>
               ) : (
                 <p>
                   Already have an account?{' '}
                   <button
-                    type="button"
-                    onClick={() => setIsRegister(false)}
-                    className="font-black text-[#D6B36A] hover:underline ml-1 cursor-pointer"
+                    onClick={() => { setIsRegister(false); setError(''); }}
+                    className="font-extrabold text-[#D6B36A] hover:underline cursor-pointer ml-1"
                   >
                     Sign in here
                   </button>
@@ -293,7 +292,7 @@ const AuthPage = ({ onOpenOnboarding }) => {
               )}
             </div>
 
-          </SpotlightCard>
+          </div>
         </div>
 
       </div>

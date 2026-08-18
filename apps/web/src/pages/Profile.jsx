@@ -151,20 +151,55 @@ const Profile = () => {
         </h3>
 
         {profile.reviews && profile.reviews.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {profile.reviews.map((r, i) => (
-              <div key={i} className="p-4 rounded-2xl glass-subtle border border-white/5 space-y-2">
+              <div key={i} className="p-4 sm:p-5 rounded-2xl glass-subtle border border-white/10 bg-white/[0.03] space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <img src={r.reviewerId?.avatar} alt={r.reviewerId?.name} className="w-8 h-8 rounded-full object-cover" />
-                    <span className="font-bold text-xs text-white">{r.reviewerId?.name}</span>
+                  <div className="flex items-center gap-2.5">
+                    <img src={r.reviewerId?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'} alt={r.reviewerId?.name} className="w-9 h-9 rounded-xl object-cover border border-white/15" />
+                    <div>
+                      <span className="font-extrabold text-xs sm:text-sm text-white block">{r.reviewerId?.name || 'Verified Peer'}</span>
+                      <span className="text-[10px] text-[#94A3B8]">@{r.reviewerId?.username || 'member'}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1 text-[#D6B36A] font-bold text-xs">
+                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D6B36A]/20 border border-[#D6B36A]/40 text-[#D6B36A] font-bold text-xs">
                     <Star className="w-3.5 h-3.5 fill-[#D6B36A]" />
-                    <span>{r.rating}.0</span>
+                    <span>{r.rating?.toFixed(1) || '5.0'}</span>
                   </div>
                 </div>
-                <p className="text-xs text-[#94A3B8] italic">"{r.comment}"</p>
+
+                {/* Multi-Criterion Breakdown Pills */}
+                <div className="flex flex-wrap gap-2 text-[10px] font-mono">
+                  {r.reliability && (
+                    <span className="px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-slate-300">
+                      Punctuality: ⭐ {r.reliability}.0
+                    </span>
+                  )}
+                  {r.knowledge && (
+                    <span className="px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-slate-300">
+                      Clarity: ⭐ {r.knowledge}.0
+                    </span>
+                  )}
+                  {r.teachingQuality && (
+                    <span className="px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-slate-300">
+                      Teaching: ⭐ {r.teachingQuality}.0
+                    </span>
+                  )}
+                  {r.communication && (
+                    <span className="px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-slate-300">
+                      Communication: ⭐ {r.communication}.0
+                    </span>
+                  )}
+                  {r.behavior && (
+                    <span className="px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 text-slate-300">
+                      Respect: ⭐ {r.behavior}.0
+                    </span>
+                  )}
+                </div>
+
+                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed bg-white/[0.02] p-3 rounded-xl border border-white/5 italic">
+                  "{r.comment}"
+                </p>
               </div>
             ))}
           </div>

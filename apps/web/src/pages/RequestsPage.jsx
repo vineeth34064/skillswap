@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 import LiquidGlassCard from '../components/LiquidGlassCard';
 import TimeCreditBadge from '../components/TimeCreditBadge';
 import PeerRatingModal from '../components/PeerRatingModal';
-import { Inbox, Send, CheckCircle2, XCircle, Clock, Video, Calendar, ShieldCheck, Sparkles, Bell, ArrowRight, UserCheck, Trash2, Star } from 'lucide-react';
+import { Inbox, Send, CheckCircle2, XCircle, Clock, Video, Calendar, ShieldCheck, Sparkles, Bell, ArrowRight, UserCheck, Trash2, Star, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const RequestsPage = () => {
   const { user } = useAuth();
+  const { socket } = useSocket();
   const navigate = useNavigate();
 
   const [sessions, setSessions] = useState([]);
@@ -36,7 +38,27 @@ const RequestsPage = () => {
 
   useEffect(() => {
     fetchSessions();
-  }, []);
+
+    if (socket) {
+      socket.on('session_updated', () => {
+        fetchSessions();
+      });
+      socket.on('session_status_changed', () => {
+        fetchSessions();
+      });
+    }
+
+    // Auto-refresh fallback every 8 seconds
+    const interval = setInterval(fetchSessions, 8000);
+
+    return () => {
+      if (socket) {
+        socket.off('session_updated');
+        socket.off('session_status_changed');
+      }
+      clearInterval(interval);
+    };
+  }, [socket]);
 
   const handleRespond = async (sessionId, status) => {
     try {
@@ -298,9 +320,9 @@ const RequestsPage = () => {
             {outgoingRequests.length === 0 ? (
               <LiquidGlassCard className="p-12 text-center space-y-4 border border-dashed border-white/10 bg-[#101827]/80">
                 <Send className="w-12 h-12 text-[#B0BAC9] mx-auto opacity-50" />
-                <h3 className="text-lg font-extrabold text-white">No pending outgoing swap requests</h3>
+                <h3 className="text-lg font-extrabold text-white">No outgoing swap requests</h3>
                 <p className="text-xs text-[#B0BAC9] max-w-md mx-auto">
-                  When you request a skill swap with a peer mentor, your sent request status will be tracked here!
+                  When you request a skill swap with a peer mentor, your sent request status will be tracked here in real time!
                 </p>
                 <button
                   onClick={() => navigate('/discover')}
@@ -313,7 +335,13 @@ const RequestsPage = () => {
               outgoingRequests.map((session) => (
                 <LiquidGlassCard
                   key={session._id}
-                  className="p-6 border-white/20 bg-[#101827]/90 space-y-4"
+                  className={`p-6 border space-y-4 transition-all ${
+                    session.status === 'ACCEPTED'
+                      ? 'border-emerald-500/40 bg-[#061B16]/90 shadow-[0_0_30px_rgba(16,185,129,0.15)]'
+                      : session.status === 'DECLINED'
+                      ? 'border-rose-500/30 bg-[#1A0A10]/90'
+                      : 'border-white/20 bg-[#101827]/90'
+                  }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
@@ -328,10 +356,30 @@ const RequestsPage = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 self-start sm:self-auto">
-                      <span className="px-4 py-1.5 rounded-full bg-[#8B7CFF]/20 text-[#8B7CFF] border border-[#8B7CFF]/40 text-xs font-mono font-extrabold flex items-center gap-1.5">
-                        <Clock className="w-4 h-4 animate-spin text-[#8B7CFF]" /> Status: PENDING ACCEPTANCE
-                      </span>
+                    <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+                      {session.status === 'ACCEPTED' ? (
+                        <>
+                          <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-extrabold flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.3)]">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-400" /> STATUS: ACCEPTED ✓
+                          </span>
+                          <a
+                            href={session.meetingLink || 'https://meet.google.com/new'}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-5 py-2.5 accent-gradient-bg text-[#101827] font-black text-xs rounded-xl shadow-glow hover:scale-105 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                          >
+                            <Video className="w-4 h-4 text-[#101827]" /> Join Google Meet Call
+                          </a>
+                        </>
+                      ) : session.status === 'DECLINED' ? (
+                        <span className="px-3.5 py-1.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-xs font-mono font-extrabold flex items-center gap-1.5">
+                          <XCircle className="w-4 h-4 text-rose-400" /> STATUS: DECLINED ✕
+                        </span>
+                      ) : (
+                        <span className="px-4 py-1.5 rounded-full bg-[#8B7CFF]/20 text-[#8B7CFF] border border-[#8B7CFF]/40 text-xs font-mono font-extrabold flex items-center gap-1.5">
+                          <Clock className="w-4 h-4 animate-spin text-[#8B7CFF]" /> Status: PENDING ACCEPTANCE
+                        </span>
+                      )}
 
                       <button
                         onClick={() => handleDeleteSession(session._id)}
@@ -352,6 +400,19 @@ const RequestsPage = () => {
                       <span>Scheduled Time:</span>
                       <span className="font-mono text-slate-200">{new Date(session.scheduledAt).toLocaleString()}</span>
                     </div>
+                    {session.status === 'ACCEPTED' && (
+                      <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+                        <span className="text-emerald-300 font-mono">Shared Google Meet:</span>
+                        <a
+                          href={session.meetingLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-mono text-emerald-400 hover:underline flex items-center gap-1"
+                        >
+                          {session.meetingLink} <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                    )}
                   </div>
 
                 </LiquidGlassCard>

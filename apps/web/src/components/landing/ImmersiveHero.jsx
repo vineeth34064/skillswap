@@ -1,238 +1,231 @@
-import React, { useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Sparkles, ArrowRight, Repeat, Code, Layout, Video, ShieldCheck, Globe, Star, Users, Zap } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { Sparkles, ArrowRight, Repeat, Mouse } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const SKILL_NODES = [
-  { id: 1, name: 'C++ Systems', category: 'Technology', x: -440, y: -110, color: '#8B7CFF' },
-  { id: 2, name: 'UI/UX Design', category: 'Design', x: 420, y: -130, color: '#8B7CFF' },
-  { id: 3, name: 'React & Next.js', category: 'Frontend', x: 450, y: 70, color: '#72C7FF' },
-  { id: 4, name: 'Python AI', category: 'Data & AI', x: -460, y: 80, color: '#72C7FF' },
-  { id: 5, name: 'Photoshop Pro', category: 'Design', x: -240, y: 220, color: '#D6B36A' },
-  { id: 6, name: 'Spanish Fluency', category: 'Languages', x: 250, y: 220, color: '#D6B36A' },
-  { id: 7, name: 'Acoustic Guitar', category: 'Music', x: 0, y: 230, color: '#8B7CFF' }
+const FLOATING_NODES = [
+  { name: 'Python', color: '#72C7FF', duration: 7.5, delay: 0 },
+  { name: 'Spanish', color: '#D6B36A', duration: 9.5, delay: 0.5 },
+  { name: 'Photoshop', color: '#D6B36A', duration: 8.0, delay: 1.0 },
+  { name: 'Guitar', color: '#8B7CFF', duration: 10.5, delay: 0.2 },
+  { name: 'React', color: '#72C7FF', duration: 8.8, delay: 0.8 }
 ];
 
 const ImmersiveHero = ({ onOpenAuth }) => {
   const navigate = useNavigate();
-  const [activeNode, setActiveNode] = useState(null);
+  const heroRef = useRef(null);
 
-  // Parallax Motion Values
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  // Scroll parallax depth tracking within the hero viewport
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start']
+  });
 
-  const springConfig = { stiffness: 150, damping: 22, mass: 0.5 };
-  const smoothMouseX = useSpring(mouseX, springConfig);
-  const smoothMouseY = useSpring(mouseY, springConfig);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 24
+  });
 
-  // Parallax layers
-  const bgX = useTransform(smoothMouseX, [-500, 500], [-10, 10]);
-  const bgY = useTransform(smoothMouseY, [-500, 500], [-10, 10]);
-
-  const networkX = useTransform(smoothMouseX, [-500, 500], [-22, 22]);
-  const networkY = useTransform(smoothMouseY, [-500, 500], [-22, 22]);
-
-  const cardX = useTransform(smoothMouseX, [-500, 500], [16, -16]);
-  const cardY = useTransform(smoothMouseY, [-500, 500], [16, -16]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set(e.clientX - centerX);
-    mouseY.set(e.clientY - centerY);
-  };
-
-  const words = [
-    { text: 'YOUR', delay: 0 },
-    { text: 'KNOWLEDGE', delay: 0.08 },
-    { text: 'HAS', delay: 0.16 },
-    { text: 'VALUE.', delay: 0.24, highlight: true }
-  ];
+  // Layered 4-Depth Parallax Transforms
+  const layer1BgY = useTransform(smoothProgress, [0, 1], [0, -25]);
+  const layer2AmbientY = useTransform(smoothProgress, [0, 1], [0, -55]);
+  const layer3CardY = useTransform(smoothProgress, [0, 1], [0, -100]);
+  const layer4TypoY = useTransform(smoothProgress, [0, 1], [0, -160]);
+  const layer4TypoOpacity = useTransform(smoothProgress, [0, 0.75], [1, 0]);
+  const layer4TypoBlur = useTransform(smoothProgress, [0, 0.75], ['blur(0px)', 'blur(8px)']);
+  const ctaY = useTransform(smoothProgress, [0, 1], [0, -75]);
 
   return (
     <section
-      onMouseMove={handleMouseMove}
-      className="relative min-h-[85vh] flex flex-col justify-between items-center px-4 sm:px-6 lg:px-12 pt-4 pb-12 overflow-hidden selection:bg-[#8B7CFF] selection:text-white w-full max-w-full"
+      id="hero"
+      ref={heroRef}
+      className="relative min-h-[90vh] lg:min-h-[95vh] flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-4 pb-12 w-full max-w-[1550px] mx-auto selection:bg-[#8B7CFF] selection:text-white"
     >
-      {/* Ambient Radial Lights */}
-      <motion.div
-        style={{ x: bgX, y: bgY }}
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] bg-gradient-to-br from-[#8B7CFF]/18 via-[#72C7FF]/12 to-transparent rounded-full blur-[140px] pointer-events-none"
-      />
-      
-      {/* Left Far Edge Spatial Badge */}
-      <div className="hidden xl:flex absolute left-8 top-1/3 -translate-y-1/2 z-20 flex-col gap-3 pointer-events-auto">
-        <div className="p-3.5 rounded-2xl liquid-glass-premium border border-white/20 shadow-glass-3d bg-[#101827]/90 space-y-1 max-w-[200px]">
-          <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#D6B36A]">
-            <Zap className="w-4 h-4 fill-[#D6B36A]" /> 2,480 Swaps Today
-          </div>
-          <p className="text-[10px] text-[#B0BAC9]">Active peer sessions happening worldwide right now.</p>
-        </div>
-      </div>
-
-      {/* Right Far Edge Spatial Badge */}
-      <div className="hidden xl:flex absolute right-8 top-1/3 -translate-y-1/2 z-20 flex-col gap-3 pointer-events-auto">
-        <div className="p-3.5 rounded-2xl liquid-glass-premium border border-white/20 shadow-glass-3d bg-[#101827]/90 space-y-1 max-w-[200px]">
-          <div className="flex items-center gap-1.5 text-xs font-extrabold text-emerald-400">
-            <ShieldCheck className="w-4 h-4" /> Escrow Protected
-          </div>
-          <p className="text-[10px] text-[#B0BAC9]">Time credits locked safely until session completion.</p>
-        </div>
-      </div>
-
-      {/* Floating Background Network Nodes on Large Screens Only */}
-      <motion.div
-        style={{ x: networkX, y: networkY }}
-        className="hidden lg:flex absolute inset-0 pointer-events-none items-center justify-center z-0 overflow-hidden"
-      >
-        <div className="relative w-full max-w-7xl h-[450px]">
-          {SKILL_NODES.map((node) => {
-            const isHovered = activeNode === node.id;
-            return (
-              <motion.div
-                key={node.id}
-                data-cursor="skill"
-                onMouseEnter={() => setActiveNode(node.id)}
-                onMouseLeave={() => setActiveNode(null)}
-                className="absolute pointer-events-auto cursor-pointer group"
-                style={{
-                  left: `calc(50% + ${node.x}px)`,
-                  top: `calc(50% + ${node.y}px)`
-                }}
-                animate={{
-                  y: [0, -8, 0],
-                  scale: isHovered ? 1.15 : 1
-                }}
-                transition={{
-                  y: { duration: 4 + (node.id % 3), repeat: Infinity, ease: 'easeInOut' },
-                  scale: { type: 'spring', stiffness: 300, damping: 20 }
-                }}
-              >
-                <div className={`px-4 py-2 rounded-full liquid-glass-premium border transition-all duration-300 flex items-center gap-2 shadow-lg ${
-                  isHovered
-                    ? 'bg-[#172235] border-[#8B7CFF] text-white shadow-glow scale-105'
-                    : 'bg-white/[0.10] border-white/20 text-[#B0BAC9] hover:border-white/35'
-                }`}>
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: node.color }} />
-                  <span className="text-xs font-extrabold font-mono tracking-wide">{node.name}</span>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+      {/* Layer 1: Background & Layer 2: Ambient Glows */}
+      <motion.div style={{ y: layer2AmbientY }} className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-[#8B7CFF]/18 via-[#72C7FF]/12 to-transparent rounded-full blur-[170px]" />
+        <div className="absolute top-1/3 right-1/4 w-[700px] h-[700px] bg-[#D6B36A]/12 rounded-full blur-[170px]" />
       </motion.div>
 
-      {/* Hero Center Content Card */}
-      <div className="relative z-10 max-w-4xl mx-auto text-left mt-2 sm:mt-4 space-y-4 sm:space-y-6 w-full">
+      {/* Main 2-Column Hero Grid with Layered Parallax */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center z-10 w-full mt-4 sm:mt-8">
         
-        {/* Subtle Live Badge */}
+        {/* Left Column: Layer 4 Depth Typography */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-white/20 shadow-sm"
+          style={{
+            y: layer4TypoY,
+            opacity: layer4TypoOpacity,
+            filter: layer4TypoBlur
+          }}
+          className="lg:col-span-7 space-y-7 sm:space-y-8 text-left"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8B7CFF] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8B7CFF]"></span>
-          </span>
-          <span className="text-xs font-mono font-bold tracking-wider uppercase text-slate-300">
-            Peer Knowledge Exchange Economy
-          </span>
+          {/* Top Pill Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs sm:text-sm font-mono font-bold shadow-sm"
+          >
+            <Sparkles className="w-4 h-4 text-[#8B7CFF]" />
+            <span>Peer-to-Peer Knowledge Exchange Network</span>
+          </motion.div>
+
+          {/* Masked Headline - Large and Imposing */}
+          <div className="space-y-1 sm:space-y-2 overflow-hidden">
+            <motion.h1
+              initial={{ y: '100%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[7.2rem] font-black tracking-tight leading-[0.93] text-white"
+            >
+              YOUR KNOWLEDGE
+            </motion.h1>
+            <motion.h1
+              initial={{ y: '100%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[7.2rem] font-black tracking-tight leading-[0.93] text-white flex items-center gap-4 sm:gap-6"
+            >
+              <span>HAS</span>
+              <span className="accent-gradient-text drop-shadow-[0_0_40px_rgba(139,124,255,0.5)]">VALUE.</span>
+            </motion.h1>
+          </div>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.9, delay: 0.3 }}
+            className="text-base sm:text-lg lg:text-xl text-[#B0BAC9] max-w-2xl font-medium leading-relaxed"
+          >
+            Exchange your time and skills directly with peers around the world.
+            <br className="hidden sm:inline" />
+            <span className="text-white font-semibold ml-1">Teach what you know, learn what you need — without money.</span>
+          </motion.p>
+
+          {/* Action Buttons */}
+          <motion.div
+            style={{ y: ctaY }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="flex flex-wrap items-center gap-4 sm:gap-5 pt-3"
+          >
+            <button
+              onClick={() => onOpenAuth ? onOpenAuth('register') : navigate('/register')}
+              className="px-8 sm:px-10 py-4 sm:py-4.5 rounded-full accent-gradient-bg text-[#101827] font-black text-sm sm:text-base shadow-glow hover:scale-105 transition-all duration-300 flex items-center gap-2.5 cursor-pointer"
+            >
+              <span>ENTER SKILLSWAP</span>
+              <ArrowRight className="w-5 h-5 text-[#101827]" />
+            </button>
+
+            <a
+              href="#how-it-works"
+              className="px-7 sm:px-8 py-4 sm:py-4.5 rounded-full liquid-glass-base border border-white/20 text-white font-extrabold text-sm sm:text-base hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <span>Explore 500+ Skills</span>
+            </a>
+          </motion.div>
+
         </motion.div>
 
-        {/* Cinematic Headline */}
-        <div className="space-y-1 sm:space-y-2 text-left">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95] flex flex-wrap justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-left">
-            {words.map((word, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: word.delay, ease: 'easeOut' }}
-                className={word.highlight ? 'accent-gradient-rare drop-shadow-[0_0_30px_rgba(214,179,106,0.45)]' : 'text-white'}
-              >
-                {word.text}
-              </motion.span>
-            ))}
-          </h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-base sm:text-xl font-medium text-[#B0BAC9] max-w-2xl text-left pt-2 sm:pt-4"
-          >
-            Teach what you know. Learn what you desire. 
-            <span className="text-white font-semibold block sm:inline sm:ml-1">Every hour taught earns 1 Time Credit. Zero currency needed.</span>
-          </motion.p>
-        </div>
-
-        {/* Primary Interactive CTA Cluster */}
+        {/* Right Column: Layer 3 Depth Live Exchange Preview Glass Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
-          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3.5 sm:gap-4 pt-2"
+          style={{ y: layer3CardY }}
+          initial={{ opacity: 0, scale: 0.92, rotateX: 6 }}
+          animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+          transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-5 w-full max-w-lg xl:max-w-xl mx-auto lg:ml-auto"
         >
-          <button
-            onClick={() => onOpenAuth ? onOpenAuth('register') : navigate('/register')}
-            className="w-full sm:w-auto px-8 py-4 rounded-full accent-gradient-bg text-[#101827] font-black text-sm sm:text-base shadow-glow hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer"
-          >
-            <span>Start Free Skill Swap</span>
-            <ArrowRight className="w-4 h-4 text-[#101827] group-hover:translate-x-1 transition-transform" />
-          </button>
+          <div className="p-7 sm:p-9 rounded-3xl border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.6),0_0_35px_rgba(139,124,255,0.18)] bg-white/[0.05] hover:bg-white/[0.08] backdrop-blur-3xl space-y-6 relative transition-all">
+            
+            {/* Card Header with Active Signal */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5 text-xs sm:text-sm font-mono font-extrabold tracking-wider text-[#8B7CFF] uppercase">
+                <Repeat className="w-4 h-4 text-[#8B7CFF]" />
+                <span>LIVE EXCHANGE PREVIEW</span>
+              </div>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_#34D399]" />
+            </div>
 
-          <a
-            href="#how-it-works"
-            className="w-full sm:w-auto px-6 py-4 rounded-full liquid-glass-base border border-white/20 text-white font-extrabold text-sm sm:text-base hover:bg-white/10 hover:border-white/35 transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <span>How Time Banking Works</span>
-          </a>
+            {/* Alice Box */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] border border-white/15 backdrop-blur-md flex items-center justify-between transition-all">
+              <div>
+                <h4 className="text-sm sm:text-base font-black text-white">Alice Knows: C++</h4>
+                <p className="text-xs sm:text-sm text-[#A1ACBC] mt-1">Wants: Photoshop</p>
+              </div>
+              <span className="px-3.5 py-1.5 rounded-full bg-[#8B7CFF]/20 text-[#8B7CFF] font-mono text-xs font-black border border-[#8B7CFF]/35">
+                1 HOUR
+              </span>
+            </div>
+
+            {/* Swap Animated Divider Circle */}
+            <div className="flex justify-center -my-3 relative z-10">
+              <motion.div
+                whileHover={{ rotate: 180 }}
+                transition={{ duration: 0.5 }}
+                className="w-12 h-12 rounded-full accent-gradient-bg flex items-center justify-center text-[#101827] shadow-glow cursor-pointer"
+              >
+                <Repeat className="w-5 h-5 text-[#101827]" />
+              </motion.div>
+            </div>
+
+            {/* Bob Box */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] border border-white/15 backdrop-blur-md flex items-center justify-between transition-all">
+              <div>
+                <h4 className="text-sm sm:text-base font-black text-white">Bob Knows: Photoshop</h4>
+                <p className="text-xs sm:text-sm text-[#A1ACBC] mt-1">Wants: C++</p>
+              </div>
+              <span className="px-3.5 py-1.5 rounded-full bg-[#72C7FF]/20 text-[#72C7FF] font-mono text-xs font-black border border-[#72C7FF]/35">
+                1 HOUR
+              </span>
+            </div>
+
+            {/* Card Footer: Match & Cost */}
+            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-sm font-bold">
+              <span className="text-[#D6B36A] font-mono">98% Reciprocal Match</span>
+              <span className="text-white font-mono">0.00 Cost</span>
+            </div>
+
+          </div>
         </motion.div>
 
       </div>
 
-      {/* Bottom Floating Stats Strip */}
-      <motion.div
-        style={{ x: cardX, y: cardY }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.6 }}
-        className="relative z-10 w-full max-w-5xl mx-auto mt-8 sm:mt-12"
-      >
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 p-3 sm:p-5 rounded-3xl liquid-glass-premium border border-white/20 shadow-glass-3d bg-[#101827]/75 backdrop-blur-2xl">
-          
-          <div className="p-3 text-center sm:border-r border-white/10 space-y-1">
-            <div className="text-xl sm:text-3xl font-black text-white font-mono flex items-center justify-center gap-1">
-              1,250<span className="text-[#8B7CFF]">+</span>
-            </div>
-            <div className="text-[11px] sm:text-xs text-[#B0BAC9] font-medium">Active Mentors</div>
-          </div>
-
-          <div className="p-3 text-center sm:border-r border-white/10 space-y-1">
-            <div className="text-xl sm:text-3xl font-black text-white font-mono flex items-center justify-center gap-1">
-              450<span className="text-[#72C7FF]">+</span>
-            </div>
-            <div className="text-[11px] sm:text-xs text-[#B0BAC9] font-medium">Distinct Skills</div>
-          </div>
-
-          <div className="p-3 text-center sm:border-r border-white/10 space-y-1">
-            <div className="text-xl sm:text-3xl font-black text-white font-mono flex items-center justify-center gap-1">
-              98.4<span className="text-emerald-400">%</span>
-            </div>
-            <div className="text-[11px] sm:text-xs text-[#B0BAC9] font-medium">Satisfaction Rate</div>
-          </div>
-
-          <div className="p-3 text-center space-y-1">
-            <div className="text-xl sm:text-3xl font-black text-[#D6B36A] font-mono flex items-center justify-center gap-1">
-              $0.00
-            </div>
-            <div className="text-[11px] sm:text-xs text-[#B0BAC9] font-medium">Pure Skill Barter</div>
-          </div>
-
+      {/* Layer 3: Floating Skill Node Physics & SVG Connections */}
+      <div className="relative z-10 w-full pt-14 sm:pt-20">
+        
+        {/* Floating Non-Synchronized Skill Bubbles */}
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm font-mono font-bold text-slate-300">
+          {FLOATING_NODES.map((node) => (
+            <motion.div
+              key={node.name}
+              animate={{
+                y: [-8, 8, -8]
+              }}
+              transition={{
+                duration: node.duration,
+                repeat: Infinity,
+                delay: node.delay,
+                ease: 'easeInOut'
+              }}
+              className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/15 hover:border-[#8B7CFF] hover:bg-white/[0.08] backdrop-blur-md transition-colors cursor-pointer shadow-sm"
+            >
+              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: node.color }} />
+              <span>{node.name}</span>
+            </motion.div>
+          ))}
         </div>
-      </motion.div>
+
+        {/* Discover What You Can Exchange Hint */}
+        <div className="text-center pt-8 space-y-2">
+          <p className="text-[11px] font-mono font-extrabold uppercase tracking-widest text-[#718096]">
+            DISCOVER WHAT YOU CAN EXCHANGE
+          </p>
+          <Mouse className="w-5 h-5 text-[#718096] mx-auto animate-bounce opacity-75" />
+        </div>
+
+      </div>
 
     </section>
   );

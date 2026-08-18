@@ -15,17 +15,17 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const newSocket = io('/', {
+    const socketUrl = import.meta.env.VITE_API_BASE_URL || '/';
+
+    const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling']
     });
 
     newSocket.on('connect', () => {
-      console.log('[Socket] Connected as user:', user._id);
       newSocket.emit('register_user', user._id);
     });
 
     newSocket.on('new_chat_notification', (data) => {
-      console.log('[Socket] Chat Notification received:', data);
       setUnreadNotifications(prev => prev + 1);
     });
 

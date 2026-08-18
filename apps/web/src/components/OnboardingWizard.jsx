@@ -121,26 +121,66 @@ const OnboardingWizard = ({ isOpen, onClose }) => {
   const handleFinish = async () => {
     setLoading(true);
     try {
-      // 1. Submit teach skills
+      // Resolve any temp custom skill IDs before final saving
+      const resolvedTeachSkills = [];
       for (const skill of teachSkills) {
-        await api.post('/users/skills', {
-          skillId: skill.skillId,
-          type: 'TEACH',
-          level: skill.level || 'Intermediate'
-        });
+        let finalId = skill.skillId;
+        if (!finalId || String(finalId).startsWith('temp-')) {
+          try {
+            const res = await api.post('/skills/custom', {
+              name: skill.name,
+              category: 'Custom & Other',
+              description: `Custom user skill: ${skill.name}`
+            });
+            if (res.success && res.skill) {
+              finalId = res.skill._id;
+            }
+          } catch (e) {
+            console.warn('Custom teach skill creation fallback:', e);
+          }
+        }
+        if (finalId && !String(finalId).startsWith('temp-')) {
+          resolvedTeachSkills.push({
+            skillId: finalId,
+            level: skill.level || 'Intermediate',
+            experienceYears: 1
+          });
+        }
       }
 
-      // 2. Submit learn skills
+      const resolvedLearnSkills = [];
       for (const skill of learnSkills) {
-        await api.post('/users/skills', {
-          skillId: skill.skillId,
-          type: 'LEARN',
-          level: skill.level || 'Beginner'
-        });
+        let finalId = skill.skillId;
+        if (!finalId || String(finalId).startsWith('temp-')) {
+          try {
+            const res = await api.post('/skills/custom', {
+              name: skill.name,
+              category: 'Custom & Other',
+              description: `Custom user skill: ${skill.name}`
+            });
+            if (res.success && res.skill) {
+              finalId = res.skill._id;
+            }
+          } catch (e) {
+            console.warn('Custom learn skill creation fallback:', e);
+          }
+        }
+        if (finalId && !String(finalId).startsWith('temp-')) {
+          resolvedLearnSkills.push({
+            skillId: finalId,
+            level: skill.level || 'Beginner'
+          });
+        }
       }
 
-      // 3. Update profile settings
-      await api.patch('/users/profile', {
+      // 1. Submit all skills in one bulk request
+      await api.put('/users/skills', {
+        teachSkills: resolvedTeachSkills,
+        learnSkills: resolvedLearnSkills
+      });
+
+      // 2. Update profile preferences
+      await api.put('/users/profile', {
         learningMode,
         availability
       });
@@ -149,7 +189,11 @@ const OnboardingWizard = ({ isOpen, onClose }) => {
       onClose();
       navigate('/dashboard');
     } catch (err) {
-      console.error(err);
+      console.error('Error saving onboarding data:', err);
+      // Fallback: still close modal so user is not trapped
+      if (refreshUser) refreshUser().catch(() => {});
+      onClose();
+      navigate('/dashboard');
     } finally {
       setLoading(false);
     }

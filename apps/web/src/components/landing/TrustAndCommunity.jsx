@@ -24,39 +24,39 @@ const TrustAndCommunity = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-28 relative overflow-hidden">
+    <section id="trust" className="py-28 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 space-y-20 relative z-10">
         
         {/* TRUST SECTION */}
-        <div className="space-y-12">
-          <ScrollReveal direction="up" className="text-center max-w-2xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-glass-base border border-white/15 text-slate-300 text-xs font-bold">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Platform Security & Verification
+        <div className="space-y-16">
+          <ScrollReveal direction="up" className="text-center max-w-4xl mx-auto space-y-5">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-white/20 text-slate-200 text-xs sm:text-sm font-mono font-bold shadow-sm">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" /> Platform Security & Verification
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
               KNOWLEDGE REQUIRES <span className="text-[#A1ACBC]">TRUST.</span>
             </h2>
-            <p className="text-sm text-[#A1ACBC]">
+            <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">
               Built with robust verification, peer reviews, transparent trust scores, and credit escrow protection.
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {TRUST_FEATURES.map((f, i) => {
               const IconComponent = f.icon;
               return (
                 <ScrollReveal key={i} direction={i % 2 === 0 ? 'left' : 'right'} delay={i * 0.1}>
                   <motion.div
-                    whileHover={{ y: -5, scale: 1.02 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="p-6 rounded-3xl liquid-glass-base border border-white/10 flex items-start gap-4 bg-[#0D1118]/80 cursor-pointer transition-all"
+                    className="p-8 sm:p-9 rounded-3xl border border-white/20 flex items-start gap-5 bg-white/[0.05] hover:bg-white/[0.08] backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] cursor-pointer transition-all"
                   >
-                    <div className="w-12 h-12 rounded-2xl liquid-glass-base border border-white/15 flex items-center justify-center text-[#8B7CFF] shrink-0">
-                      <IconComponent className="w-6 h-6" />
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.06] border border-white/20 backdrop-blur-md flex items-center justify-center text-[#8B7CFF] shrink-0 shadow-sm">
+                      <IconComponent className="w-7 h-7 sm:w-8 sm:h-8" />
                     </div>
-                    <div className="space-y-1">
-                      <h4 className="font-extrabold text-base text-white">{f.title}</h4>
-                      <p className="text-xs text-[#A1ACBC] leading-relaxed">{f.desc}</p>
+                    <div className="space-y-2">
+                      <h4 className="font-black text-lg sm:text-xl text-white">{f.title}</h4>
+                      <p className="text-sm sm:text-base text-[#A1ACBC] leading-relaxed">{f.desc}</p>
                     </div>
                   </motion.div>
                 </ScrollReveal>
@@ -66,43 +66,43 @@ const TrustAndCommunity = () => {
         </div>
 
         {/* COMMUNITY FLOATING ISLANDS */}
-        <div className="space-y-10 pt-6">
-          <ScrollReveal direction="up" className="text-center max-w-2xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-glass-base border border-[#8B7CFF]/30 text-[#8B7CFF] text-xs font-bold">
-              <Users className="w-3.5 h-3.5" /> Organic Knowledge Hubs
+        <div className="space-y-14 pt-8">
+          <ScrollReveal direction="up" className="text-center max-w-4xl mx-auto space-y-5">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs sm:text-sm font-mono font-bold shadow-sm">
+              <Users className="w-4 h-4" /> Organic Knowledge Hubs
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              SKILLS BECOME <span className="accent-gradient-rare">COMMUNITIES.</span>
+            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
+              SKILLS BECOME <span className="accent-gradient-rare drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">COMMUNITIES.</span>
             </h2>
-            <p className="text-sm text-[#A1ACBC]">
+            <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">
               Join specialized skill guilds to participate in group workshops, study circles, and peer mentoring.
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {COMMUNITIES.map((c, i) => (
               <ScrollReveal key={i} direction="zoom" delay={i * 0.1}>
                 <motion.div
-                  whileHover={{ y: -8, scale: 1.03 }}
+                  whileHover={{ y: -10, scale: 1.03 }}
                   whileTap={{ scale: 0.96 }}
-                  className="p-6 rounded-3xl liquid-glass-base border border-white/10 space-y-4 cursor-pointer group hover:border-[#8B7CFF]/50 transition-all bg-[#0D1118]/80"
+                  className="p-8 sm:p-9 rounded-3xl border border-white/20 space-y-6 cursor-pointer group hover:border-[#8B7CFF]/60 transition-all bg-white/[0.05] hover:bg-white/[0.09] backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
                   onClick={() => navigate('/discover')}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-3xl">{c.icon}</span>
-                    <span className="px-2.5 py-1 rounded-full bg-white/10 text-white text-[10px] font-mono font-bold">
+                    <span className="text-4xl">{c.icon}</span>
+                    <span className="px-3.5 py-1.5 rounded-full bg-white/10 text-white text-xs font-mono font-bold">
                       {c.members}
                     </span>
                   </div>
 
                   <div>
-                    <h4 className="font-extrabold text-base text-white group-hover:text-[#8B7CFF] transition-colors">
+                    <h4 className="font-black text-xl sm:text-2xl text-white group-hover:text-[#8B7CFF] transition-colors">
                       {c.name}
                     </h4>
-                    <p className="text-xs text-[#A1ACBC] mt-1">Active peer exchanges & group sessions daily</p>
+                    <p className="text-sm text-[#A1ACBC] mt-2">Active peer exchanges & group sessions daily</p>
                   </div>
 
-                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-[#D6B36A] font-bold">
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-sm text-[#D6B36A] font-bold">
                     <span>Explore Guild</span>
                     <span>Join Free →</span>
                   </div>

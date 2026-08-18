@@ -24,6 +24,8 @@ const getProfile = async (req, res, next) => {
     await updateTrustScore(user._id);
 
     const skills = await UserSkill.find({ userId: user._id }).populate('skillId');
+    const validSkills = skills.filter(s => s.skillId);
+
     const reviews = await Review.find({ targetUserId: user._id })
       .populate('reviewerId', 'name avatar username')
       .sort({ createdAt: -1 });
@@ -36,8 +38,8 @@ const getProfile = async (req, res, next) => {
       success: true,
       profile: {
         ...user.toObject(),
-        teachSkills: skills.filter(s => s.type === 'TEACH'),
-        learnSkills: skills.filter(s => s.type === 'LEARN'),
+        teachSkills: validSkills.filter(s => s.type === 'TEACH'),
+        learnSkills: validSkills.filter(s => s.type === 'LEARN'),
         reviews,
         badges
       }
@@ -61,7 +63,18 @@ const updateProfile = async (req, res, next) => {
     if (city) user.city = city;
     if (learningMode) user.learningMode = learningMode;
     if (languages) user.languages = languages;
-    if (availability) user.availability = availability;
+    if (availability) {
+      if (Array.isArray(availability)) {
+        user.availability = availability.map(item => {
+          if (typeof item === 'string') {
+            return { day: item, startTime: '09:00', endTime: '21:00' };
+          }
+          return item;
+        });
+      } else {
+        user.availability = availability;
+      }
+    }
     if (avatar) user.avatar = avatar;
 
     await user.save();
@@ -86,33 +99,38 @@ const updateSkills = async (req, res, next) => {
 
     if (teachSkills && Array.isArray(teachSkills)) {
       for (const item of teachSkills) {
-        await UserSkill.create({
-          userId,
-          skillId: item.skillId,
-          type: 'TEACH',
-          level: item.level || 'Intermediate',
-          experienceYears: item.experienceYears || 1
-        });
+        if (item && item.skillId) {
+          await UserSkill.create({
+            userId,
+            skillId: typeof item.skillId === 'object' ? item.skillId._id : item.skillId,
+            type: 'TEACH',
+            level: item.level || 'Intermediate',
+            experienceYears: item.experienceYears || 1
+          });
+        }
       }
     }
 
     if (learnSkills && Array.isArray(learnSkills)) {
       for (const item of learnSkills) {
-        await UserSkill.create({
-          userId,
-          skillId: item.skillId,
-          type: 'LEARN',
-          level: item.level || 'Beginner'
-        });
+        if (item && item.skillId) {
+          await UserSkill.create({
+            userId,
+            skillId: typeof item.skillId === 'object' ? item.skillId._id : item.skillId,
+            type: 'LEARN',
+            level: item.level || 'Beginner'
+          });
+        }
       }
     }
 
     const updatedSkills = await UserSkill.find({ userId }).populate('skillId');
+    const validUpdated = updatedSkills.filter(s => s.skillId);
 
     res.json({
       success: true,
-      teachSkills: updatedSkills.filter(s => s.type === 'TEACH'),
-      learnSkills: updatedSkills.filter(s => s.type === 'LEARN')
+      teachSkills: validUpdated.filter(s => s.type === 'TEACH'),
+      learnSkills: validUpdated.filter(s => s.type === 'LEARN')
     });
   } catch (err) {
     next(err);

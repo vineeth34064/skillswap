@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SocketProvider } from './context/SocketContext';
 import GlassDockNavbar from './components/GlassDockNavbar';
@@ -22,11 +22,21 @@ import AdminDashboard from './pages/AdminDashboard';
 import AuthPage from './pages/AuthPage';
 import RequestsPage from './pages/RequestsPage';
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [pathname]);
+  return null;
+};
+
 const AppRoutes = ({ onOpenAuth, onOpenOnboarding }) => {
   const { user } = useAuth();
 
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={user ? <Dashboard onOpenOnboarding={onOpenOnboarding} /> : <LandingPage onOpenAuth={onOpenAuth} />} />
       <Route path="/login" element={<AuthPage onOpenOnboarding={onOpenOnboarding} />} />
       <Route path="/register" element={<AuthPage onOpenOnboarding={onOpenOnboarding} />} />
@@ -41,6 +51,7 @@ const AppRoutes = ({ onOpenAuth, onOpenOnboarding }) => {
       <Route path="/admin" element={user && user.isAdmin ? <AdminDashboard /> : <Navigate to="/" />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
+    </>
   );
 };
 
