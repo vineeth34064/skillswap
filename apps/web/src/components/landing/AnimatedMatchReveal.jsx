@@ -46,7 +46,7 @@ const AnimatedMatchReveal = () => {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-[#72C7FF]/40 text-[#72C7FF] text-xs sm:text-sm font-mono font-bold shadow-blue-glow">
             <Sparkles className="w-4 h-4" /> Reciprocal Match Engine
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
+          <h2 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.02]">
             How Two Minds <span className="accent-gradient-rare drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">Connect</span>
           </h2>
           <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">

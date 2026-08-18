@@ -43,7 +43,7 @@ const TimeCreditEconomy = () => {
             <Zap className="w-4 h-4 text-[#D6B36A]" /> The Time Credit System
           </div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
+          <h2 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.02]">
             TIME IS THE <span className="text-[#D6B36A] drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">CURRENCY.</span>
           </h2>
 

@@ -27,7 +27,7 @@ const SpatialSkillNetwork = () => {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs sm:text-sm font-mono font-bold shadow-sm">
             <Sparkles className="w-4 h-4 text-[#8B7CFF]" /> Living Knowledge Web
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
+          <h2 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.02]">
             The SkillSwap <span className="accent-gradient-rare drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">Network</span>
           </h2>
           <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">

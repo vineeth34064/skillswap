@@ -33,7 +33,7 @@ const TrustAndCommunity = () => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-white/20 text-slate-200 text-xs sm:text-sm font-mono font-bold shadow-sm">
               <ShieldCheck className="w-4 h-4 text-emerald-400" /> Platform Security & Verification
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
+            <h2 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.02]">
               KNOWLEDGE REQUIRES <span className="text-[#A1ACBC]">TRUST.</span>
             </h2>
             <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">

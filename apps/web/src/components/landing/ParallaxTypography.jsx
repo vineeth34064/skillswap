@@ -37,21 +37,21 @@ const ParallaxTypography = () => {
         <div className="space-y-2.5 sm:space-y-4 select-none overflow-hidden py-4">
           <motion.div
             style={{ x: xLeft }}
-            className="text-4xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white/90 font-mono leading-none"
+            className="text-[3rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white/90 font-mono leading-none"
           >
             EVERYONE
           </motion.div>
 
           <motion.div
             style={{ x: xRight }}
-            className="text-4xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight accent-gradient-rare leading-none"
+            className="text-[3rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight accent-gradient-rare leading-none"
           >
             KNOWS
           </motion.div>
 
           <motion.div
             style={{ scale: scaleCenter, opacity: opacityCenter }}
-            className="text-4xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white leading-none"
+            className="text-[3rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white leading-none"
           >
             SOMETHING.
           </motion.div>
