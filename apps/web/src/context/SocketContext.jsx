@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }) => {
     const isLocalhost = typeof window !== 'undefined' && 
       (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-    const socketUrl = import.meta.env.VITE_API_BASE_URL || (isLocalhost ? 'http://localhost:5000' : 'https://skillswap-a05r.onrender.com');
+    const socketUrl = import.meta.env.VITE_API_BASE_URL || (isLocalhost ? 'http://localhost:5000' : (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5000'));
 
     const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling']

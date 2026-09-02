@@ -39,16 +39,7 @@ const ScrollToTop = () => {
 };
 
 const AppRoutes = ({ onOpenAuth, onOpenOnboarding }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-[65vh] flex flex-col items-center justify-center space-y-4 text-white">
-        <div className="w-10 h-10 rounded-full border-4 border-[#8B7CFF] border-t-transparent animate-spin" />
-        <p className="text-xs font-mono font-bold text-slate-300 animate-pulse">Connecting to SkillSwap Network...</p>
-      </div>
-    );
-  }
+  const { user } = useAuth();
 
   return (
     <>
@@ -83,7 +74,45 @@ const AppRoutes = ({ onOpenAuth, onOpenOnboarding }) => {
   );
 };
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("SkillSwap UI Error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-[#080E24] text-white p-6 text-center">
+          <div className="max-w-md space-y-4 p-8 rounded-3xl bg-[#101827] border border-white/20 shadow-2xl">
+            <h2 className="text-2xl font-black text-[#72C7FF]">SkillSwap Application Reset</h2>
+            <p className="text-xs text-slate-300">
+              {this.state.error?.message || 'An unexpected rendering error occurred. Click below to reload your session.'}
+            </p>
+            <button
+              onClick={() => { localStorage.clear(); window.location.href = '/'; }}
+              className="px-6 py-3 rounded-2xl accent-gradient-bg text-[#05070A] font-black text-xs shadow-glow hover:scale-105 transition-all cursor-pointer"
+            >
+              Reload & Reset Session 🔄
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const AppContent = () => {
+  const { loading } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState('login');
   const [onboardingOpen, setOnboardingOpen] = useState(false);
@@ -93,6 +122,17 @@ const AppContent = () => {
     setAuthMode(mode);
     setAuthModalOpen(true);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#080E24] text-white">
+        <div className="text-center space-y-3">
+          <div className="w-12 h-12 border-4 border-[#8B7CFF] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-xs font-extrabold text-[#72C7FF] tracking-wider uppercase">Loading SkillSwap V4...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#080E24] text-[#F7F9FC] relative selection:bg-[#8B7CFF] selection:text-white">
@@ -130,13 +170,15 @@ const AppContent = () => {
 
 const App = () => {
   return (
-    <AuthProvider>
-      <SocketProvider>
-        <BrowserRouter>
-          <AppContent />
-        </BrowserRouter>
-      </SocketProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <SocketProvider>
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </SocketProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 };
 
