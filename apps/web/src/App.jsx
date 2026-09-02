@@ -39,7 +39,16 @@ const ScrollToTop = () => {
 };
 
 const AppRoutes = ({ onOpenAuth, onOpenOnboarding }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-[65vh] flex flex-col items-center justify-center space-y-4 text-white">
+        <div className="w-10 h-10 rounded-full border-4 border-[#8B7CFF] border-t-transparent animate-spin" />
+        <p className="text-xs font-mono font-bold text-slate-300 animate-pulse">Connecting to SkillSwap Network...</p>
+      </div>
+    );
+  }
 
   return (
     <>
