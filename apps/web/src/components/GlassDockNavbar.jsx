@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Compass, Trophy, Repeat, Calendar, MessageSquare, Shield, LogOut, Command, Sparkles, HelpCircle, Zap, Inbox, Menu, X, User } from 'lucide-react';
+import { Compass, Trophy, Repeat, Calendar, MessageSquare, Shield, LogOut, Command, Sparkles, HelpCircle, Zap, Inbox, Menu, X, User, Film, Map, Wallet, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
 import TimeCreditBadge from './TimeCreditBadge';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/client';
@@ -13,6 +13,21 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
   const [logoHovered, setLogoHovered] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
+
+  const navRef = useRef(null);
+
+  const scrollNav = (direction) => {
+    if (navRef.current) {
+      const scrollAmount = direction === 'left' ? -220 : 220;
+      navRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  const handleWheelNav = (e) => {
+    if (navRef.current && e.deltaY !== 0) {
+      navRef.current.scrollLeft += e.deltaY;
+    }
+  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -65,8 +80,8 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
 
   return (
     <>
-      <header className="fixed top-2.5 sm:top-3 left-0 right-0 z-50 px-2 sm:px-4 w-full max-w-6xl mx-auto pointer-events-none">
-        <div className="pointer-events-auto rounded-2xl sm:rounded-full px-3.5 sm:px-5 lg:px-6 py-2 sm:py-2.5 border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_20px_rgba(139,124,255,0.12)] flex items-center justify-between transition-all duration-300 hover:border-white/35 backdrop-blur-2xl bg-white/[0.05] hover:bg-white/[0.08] relative overflow-hidden">
+      <header className="fixed top-3 sm:top-4 left-0 right-0 z-50 px-2 sm:px-4 w-full max-w-[98%] sm:max-w-[96%] mx-auto pointer-events-none">
+        <div className="pointer-events-auto rounded-2xl sm:rounded-full px-4 sm:px-6 lg:px-8 py-3 border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_20px_rgba(139,124,255,0.12)] flex items-center justify-between transition-all duration-300 hover:border-white/35 backdrop-blur-2xl bg-white/[0.05] hover:bg-white/[0.08] relative overflow-hidden">
           
           {/* Glass Specular Top Highlight */}
           <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
@@ -77,115 +92,216 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
             onClick={handleLogoClick}
             onMouseEnter={() => setLogoHovered(true)}
             onMouseLeave={() => setLogoHovered(false)}
-            className="flex items-center gap-2 sm:gap-2.5 group cursor-pointer shrink-0"
+            className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink-0"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl accent-gradient-bg flex items-center justify-center shadow-glow transition-transform duration-300 group-hover:scale-105">
-              <Repeat className={`w-4 h-4 text-[#101827] transition-transform duration-500 ${logoHovered ? 'rotate-180' : ''}`} />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-2xl accent-gradient-bg flex items-center justify-center shadow-glow transition-transform duration-300 group-hover:scale-110">
+              <Repeat className={`w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 text-[#101827] transition-transform duration-500 ${logoHovered ? 'rotate-180' : ''}`} />
             </div>
-            <span className="font-sans font-bold text-sm sm:text-base tracking-tight text-white flex items-center">
+            <span className="font-sans font-black text-base sm:text-lg tracking-tight text-white flex items-center">
               Skill<span className="accent-gradient-text drop-shadow-[0_0_20px_rgba(139,124,255,0.4)]">Swap</span>
             </span>
           </Link>
 
           {/* Desktop Center Nav Links */}
           {user ? (
-            <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2 text-sm font-extrabold text-[#B0BAC9] mx-2 xl:mx-4 flex-1 justify-center">
-              <Link
-                to="/dashboard"
-                className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive('/dashboard')
-                    ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
-                    : 'hover:text-white hover:bg-white/10'
-                }`}
+            <div className="hidden lg:flex items-center gap-1 mx-2 flex-1 max-w-[58vw] xl:max-w-[65vw] relative group/nav">
+              <button
+                type="button"
+                onClick={() => scrollNav('left')}
+                className="p-1 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white border border-white/15 shrink-0 transition-all cursor-pointer shadow-sm"
+                title="Scroll Left"
               >
-                <Sparkles className="w-4 h-4 text-[#8B7CFF]" />
-                Dashboard
-              </Link>
-              <Link
-                to="/discover"
-                className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive('/discover')
-                    ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
-                    : 'hover:text-white hover:bg-white/10'
-                }`}
+                <ChevronLeft className="w-4 h-4 text-[#8B7CFF]" />
+              </button>
+
+              <nav
+                ref={navRef}
+                onWheel={handleWheelNav}
+                className="flex items-center gap-1.5 xl:gap-2 text-sm font-extrabold text-[#B0BAC9] overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap py-1 px-1 flex-1"
               >
-                <Compass className="w-4 h-4 text-[#8B7CFF]" />
-                Discover
-              </Link>
-              <Link
-                to="/matches"
-                className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive('/matches')
-                    ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
-                    : 'hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Repeat className="w-4 h-4 text-[#8B7CFF]" />
-                Matches
-              </Link>
-              <Link
-                to="/requests"
-                className={`relative px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive('/requests')
-                    ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
-                    : 'hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Inbox className="w-4 h-4 text-[#8B7CFF]" />
-                Requests
-                {pendingRequestsCount > 0 && (
-                  <span className="w-4.5 h-4.5 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center animate-pulse">
-                    {pendingRequestsCount}
-                  </span>
-                )}
-              </Link>
-              <Link
-                to="/leaderboard"
-                className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive('/leaderboard')
-                    ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
-                    : 'hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Trophy className="w-4 h-4 text-[#D6B36A]" />
-                Leaderboard
-              </Link>
-              <Link
-                to="/sessions"
-                className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive('/sessions')
-                    ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
-                    : 'hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Calendar className="w-4 h-4 text-[#8B7CFF]" />
-                Sessions
-              </Link>
-              <Link
-                to="/chat"
-                className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                  isActive('/chat')
-                    ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
-                    : 'hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <MessageSquare className="w-4 h-4 text-[#8B7CFF]" />
-                Chat
-              </Link>
-              {user.role === 'ADMIN' && (
                 <Link
-                  to="/admin"
+                  to="/dashboard"
                   className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                    isActive('/admin')
-                      ? 'bg-rose-500/30 text-rose-300 font-black border border-rose-500/40 shadow-md backdrop-blur-md'
-                      : 'hover:text-rose-400 hover:bg-rose-500/10'
+                    isActive('/dashboard')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  <Shield className="w-4 h-4 text-rose-400" />
-                  Admin
+                  <Sparkles className="w-4 h-4 text-[#8B7CFF]" />
+                  Dashboard
                 </Link>
-              )}
-            </nav>
+                <Link
+                  to="/discover"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/discover')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Compass className="w-4 h-4 text-[#8B7CFF]" />
+                  Discover
+                </Link>
+                <Link
+                  to="/matches"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/matches')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Repeat className="w-4 h-4 text-[#8B7CFF]" />
+                  Matches
+                </Link>
+                <Link
+                  to="/requests"
+                  className={`relative px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/requests')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Inbox className="w-4 h-4 text-[#8B7CFF]" />
+                  Requests
+                  {pendingRequestsCount > 0 && (
+                    <span className="w-4.5 h-4.5 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center animate-pulse">
+                      {pendingRequestsCount}
+                    </span>
+                  )}
+                </Link>
+                <Link
+                  to="/leaderboard"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/leaderboard')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Trophy className="w-4 h-4 text-[#D6B36A]" />
+                  Leaderboard
+                </Link>
+                <Link
+                  to="/sessions"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/sessions')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Calendar className="w-4 h-4 text-[#8B7CFF]" />
+                  Sessions
+                </Link>
+                <Link
+                  to="/wallet"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/wallet')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Wallet className="w-4 h-4 text-[#8B7CFF]" />
+                  Wallet
+                </Link>
+                <Link
+                  to="/reels"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/reels')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Film className="w-4 h-4 text-[#EC4899]" />
+                  Reels
+                </Link>
+                <Link
+                  to="/roadmaps"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/roadmaps')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Map className="w-4 h-4 text-[#72C7FF]" />
+                  Roadmaps
+                </Link>
+                <Link
+                  to="/chat"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/chat')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <MessageSquare className="w-4 h-4 text-[#8B7CFF]" />
+                  Chat
+                </Link>
+                <Link
+                  to="/community"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/community')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <MessageSquare className="w-4 h-4 text-[#72C7FF]" />
+                  Community
+                </Link>
+                <Link
+                  to="/analytics"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/analytics')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Award className="w-4 h-4 text-[#8B7CFF]" />
+                  Analytics
+                </Link>
+                <Link
+                  to="/referrals"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/referrals')
+                      ? 'bg-[#D6B36A]/20 text-[#D6B36A] font-black border border-[#D6B36A]/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-[#D6B36A] hover:bg-white/10'
+                  }`}
+                >
+                  <Zap className="w-4 h-4 text-[#D6B36A]" />
+                  Referrals
+                </Link>
+                <Link
+                  to="/settings"
+                  className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isActive('/settings')
+                      ? 'bg-white/20 text-white font-black border border-white/30 shadow-md backdrop-blur-md'
+                      : 'hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Settings className="w-4 h-4 text-slate-400" />
+                  Settings
+                </Link>
+                {(user.isAdmin || user.role === 'ADMIN') && (
+                  <Link
+                    to="/admin"
+                    className={`px-3 xl:px-4 py-2 rounded-full transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                      isActive('/admin')
+                        ? 'bg-rose-500/30 text-rose-300 font-black border border-rose-500/40 shadow-md backdrop-blur-md'
+                        : 'hover:text-rose-400 hover:bg-rose-500/10'
+                    }`}
+                  >
+                    <Shield className="w-4 h-4 text-rose-400" />
+                    Admin
+                  </Link>
+                )}
+              </nav>
+
+              <button
+                type="button"
+                onClick={() => scrollNav('right')}
+                className="p-1 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white border border-white/15 shrink-0 transition-all cursor-pointer shadow-sm"
+                title="Scroll Right"
+              >
+                <ChevronRight className="w-4 h-4 text-[#8B7CFF]" />
+              </button>
+            </div>
           ) : (
             <nav className="hidden md:flex items-center justify-evenly flex-1 px-4 lg:px-8 text-sm font-extrabold text-[#B0BAC9]">
               <a
@@ -237,10 +353,11 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
                 </Link>
                 <button
                   onClick={() => { logout(); navigate('/'); }}
-                  className="hidden sm:block p-1.5 text-[#B0BAC9] hover:text-rose-400 transition-colors cursor-pointer"
-                  title="Logout"
+                  className="hidden sm:flex px-3.5 py-1.5 rounded-full bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 text-xs font-bold items-center gap-1.5 transition-all cursor-pointer shadow-sm shrink-0"
+                  title="Logout of current session"
                 >
-                  <LogOut className="w-4.5 h-4.5" />
+                  <LogOut className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Logout</span>
                 </button>
               </>
             ) : (

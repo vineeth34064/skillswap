@@ -33,30 +33,30 @@ const TrustAndCommunity = () => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-white/20 text-slate-200 text-xs sm:text-sm font-mono font-bold shadow-sm">
               <ShieldCheck className="w-4 h-4 text-emerald-400" /> Platform Security & Verification
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">
+            <h2 className="text-4xl sm:text-6xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.02]">
               KNOWLEDGE REQUIRES <span className="text-[#A1ACBC]">TRUST.</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#A1ACBC] max-w-xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">
               Built with robust verification, peer reviews, transparent trust scores, and credit escrow protection.
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {TRUST_FEATURES.map((f, i) => {
               const IconComponent = f.icon;
               return (
                 <ScrollReveal key={i} direction={i % 2 === 0 ? 'left' : 'right'} delay={i * 0.1}>
                   <motion.div
-                    whileHover={{ y: -4, scale: 1.01 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="p-5 sm:p-6 rounded-2xl border border-white/20 flex items-start gap-4 bg-white/[0.05] hover:bg-white/[0.08] backdrop-blur-2xl shadow-sm cursor-pointer transition-all"
+                    className="p-8 sm:p-9 rounded-3xl border border-white/20 flex items-start gap-5 bg-white/[0.05] hover:bg-white/[0.08] backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] cursor-pointer transition-all"
                   >
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/[0.06] border border-white/20 backdrop-blur-md flex items-center justify-center text-[#8B7CFF] shrink-0 shadow-sm">
-                      <IconComponent className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.06] border border-white/20 backdrop-blur-md flex items-center justify-center text-[#8B7CFF] shrink-0 shadow-sm">
+                      <IconComponent className="w-7 h-7 sm:w-8 sm:h-8" />
                     </div>
-                    <div className="space-y-1">
-                      <h4 className="font-bold text-base sm:text-lg text-white">{f.title}</h4>
-                      <p className="text-xs sm:text-sm text-[#A1ACBC] leading-relaxed">{f.desc}</p>
+                    <div className="space-y-2">
+                      <h4 className="font-black text-lg sm:text-xl text-white">{f.title}</h4>
+                      <p className="text-sm sm:text-base text-[#A1ACBC] leading-relaxed">{f.desc}</p>
                     </div>
                   </motion.div>
                 </ScrollReveal>
@@ -66,15 +66,15 @@ const TrustAndCommunity = () => {
         </div>
 
         {/* COMMUNITY FLOATING ISLANDS */}
-        <div className="space-y-10 pt-6">
-          <ScrollReveal direction="up" className="text-center max-w-4xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs font-mono font-bold shadow-sm">
-              <Users className="w-3.5 h-3.5" /> Organic Knowledge Hubs
+        <div className="space-y-14 pt-8">
+          <ScrollReveal direction="up" className="text-center max-w-4xl mx-auto space-y-5">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs sm:text-sm font-mono font-bold shadow-sm">
+              <Users className="w-4 h-4" /> Organic Knowledge Hubs
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">
-              SKILLS BECOME <span className="accent-gradient-rare drop-shadow-[0_0_20px_rgba(214,179,106,0.4)]">COMMUNITIES.</span>
+            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
+              SKILLS BECOME <span className="accent-gradient-rare drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">COMMUNITIES.</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#A1ACBC] max-w-xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">
               Join specialized skill guilds to participate in group workshops, study circles, and peer mentoring.
             </p>
           </ScrollReveal>

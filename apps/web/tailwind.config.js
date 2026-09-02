@@ -34,7 +34,9 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'Geist', 'Manrope', 'Outfit', 'sans-serif'],
+        sans: ['Inter', 'Geist', 'Outfit', 'sans-serif'],
+        display: ['Outfit', 'Space Grotesk', 'Inter', 'sans-serif'],
+        mono: ['Space Grotesk', 'Geist', 'monospace'],
       },
       boxShadow: {
         'glow': '0 0 35px rgba(139, 124, 255, 0.18)',

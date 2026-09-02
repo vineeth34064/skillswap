@@ -67,27 +67,27 @@ const AuthPage = ({ onOpenOnboarding }) => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 relative z-10 min-h-[80vh] flex flex-col justify-center">
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-12 space-y-8 relative z-10 min-h-[85vh] flex flex-col justify-center">
       
       {/* Background Spatial Glows */}
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[#8B7CFF]/15 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-[#72C7FF]/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#8B7CFF]/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#72C7FF]/15 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         
         {/* Left Column: Spatial Network Teaser */}
-        <div className="lg:col-span-6 space-y-5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-premium border border-[#D6B36A]/50 text-[#D6B36A] text-xs font-bold shadow-gold-glow">
-            <Sparkles className="w-3.5 h-3.5 text-[#D6B36A]" />
+        <div className="lg:col-span-6 space-y-7">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass-premium border border-[#D6B36A]/50 text-[#D6B36A] text-xs sm:text-sm font-extrabold shadow-gold-glow">
+            <Sparkles className="w-4 h-4 text-[#D6B36A]" />
             <span>Exchange Skills, Not Money</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
             Unlock the World's <br />
-            <span className="accent-gradient-rare drop-shadow-[0_0_20px_rgba(214,179,106,0.4)]">Knowledge Network</span>
+            <span className="accent-gradient-rare drop-shadow-[0_0_30px_rgba(214,179,106,0.4)]">Knowledge Network</span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-[#B0BAC9] leading-relaxed max-w-lg">
+          <p className="text-base sm:text-lg text-[#B0BAC9] leading-relaxed max-w-xl">
             Swap your C++, Python, or Music skills directly for Photoshop, UI Design, or Languages. Earn Time Credits whenever you teach others.
           </p>
 

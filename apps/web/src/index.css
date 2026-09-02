@@ -10,7 +10,18 @@
     overflow-x: hidden;
     max-width: 100vw;
     width: 100%;
-    letter-spacing: -0.015em;
+    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', 'Geist', sans-serif;
+    letter-spacing: normal;
+  }
+
+  code, kbd, samp, pre {
+    font-family: 'Space Grotesk', 'Geist', monospace;
   }
 }
 
@@ -104,6 +115,15 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(139, 124, 255, 0.40);
+}
+
+/* Hide Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Atmospheric Noise Layer */

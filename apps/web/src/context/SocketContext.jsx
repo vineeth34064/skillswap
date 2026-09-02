@@ -15,7 +15,7 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const socketUrl = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://skillswap-a05r.onrender.com' : '/');
+    const socketUrl = import.meta.env.VITE_API_BASE_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : window.location.origin);
 
     const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling']

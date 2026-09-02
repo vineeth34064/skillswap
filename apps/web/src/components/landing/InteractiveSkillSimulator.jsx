@@ -54,11 +54,11 @@ const InteractiveSkillSimulator = () => {
             <Sparkles className="w-4 h-4 text-[#8B7CFF]" /> Live Skill Graph Explorer
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">
-            SEE HOW SKILLSWAP <span className="accent-gradient-rare drop-shadow-[0_0_20px_rgba(214,179,106,0.4)]">MATCHES YOU.</span>
+          <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[0.98]">
+            SEE HOW SKILLSWAP <span className="accent-gradient-rare drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">MATCHES YOU.</span>
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#A1ACBC] max-w-xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">
             Select what you know or want to learn. Our real-time engine maps sub-skills and matches you instantly with verified peer mentors.
           </p>
         </ScrollReveal>

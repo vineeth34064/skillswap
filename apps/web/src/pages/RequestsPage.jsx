@@ -149,21 +149,21 @@ const RequestsPage = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 relative z-10"
+      className="max-w-[96%] sm:max-w-[95%] xl:max-w-[1400px] mx-auto px-4 sm:px-6 py-6 space-y-8 relative z-10 text-white"
     >
       {/* Background Glow */}
-      <div className="absolute top-10 left-1/3 w-[400px] h-[400px] bg-[#8B7CFF]/12 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-10 left-1/3 w-[600px] h-[600px] bg-[#8B7CFF]/12 rounded-full blur-[160px] pointer-events-none" />
 
       {/* Header */}
-      <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#8B7CFF]/15 border border-[#8B7CFF]/30 text-[#8B7CFF] text-[11px] font-mono font-bold">
-            <Inbox className="w-3 h-3 text-[#8B7CFF]" /> SWAP REQUESTS WORKSPACE
+      <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#8B7CFF]/15 border border-[#8B7CFF]/30 text-[#8B7CFF] text-xs font-mono font-bold">
+            <Inbox className="w-3.5 h-3.5 text-[#8B7CFF]" /> SWAP REQUESTS WORKSPACE
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
             Manage <span className="accent-gradient-text">Skill Swap Requests</span>
           </h1>
-          <p className="text-xs sm:text-sm text-[#B0BAC9]">
+          <p className="text-sm text-[#B0BAC9]">
             Accept or reject incoming swap requests from peers, and track your sent requests in real time.
           </p>
         </div>

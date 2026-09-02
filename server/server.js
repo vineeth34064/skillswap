@@ -18,7 +18,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || '*',
+    origin: (origin, callback) => callback(null, true),
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true
   }
@@ -33,7 +33,7 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || '*',
+  origin: (origin, callback) => callback(null, true),
   credentials: true
 }));
 
@@ -69,6 +69,16 @@ app.use('/api/reviews', require('./routes/reviewRoutes'));
 app.use('/api/leaderboard', require('./routes/leaderboardRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/reels', require('./routes/reelRoutes'));
+app.use('/api/roadmaps', require('./routes/roadmapRoutes'));
+app.use('/api/reports', require('./routes/reportRoutes'));
+app.use('/api/attendance', require('./routes/attendanceRoutes'));
+app.use('/api/disputes', require('./routes/disputeRoutes'));
+app.use('/api/certificates', require('./routes/certificateRoutes'));
+app.use('/api/referrals', require('./routes/referralRoutes'));
+app.use('/api/posts', require('./routes/postRoutes'));
+app.use('/api/follow', require('./routes/followRoutes'));
+app.use('/api/analytics', require('./routes/analyticsRoutes'));
 
 // Root endpoint
 app.get('/', (req, res) => {

@@ -39,16 +39,16 @@ const ImmersiveHero = ({ onOpenAuth }) => {
     <section
       id="hero"
       ref={heroRef}
-      className="relative min-h-[80vh] lg:min-h-[85vh] flex flex-col justify-between px-4 sm:px-8 lg:px-12 pt-4 pb-8 w-full max-w-6xl mx-auto selection:bg-[#8B7CFF] selection:text-white"
+      className="relative min-h-[90vh] lg:min-h-[95vh] flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-4 pb-12 w-full max-w-[1550px] mx-auto selection:bg-[#8B7CFF] selection:text-white"
     >
       {/* Layer 1: Background & Layer 2: Ambient Glows */}
       <motion.div style={{ y: layer2AmbientY }} className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-br from-[#8B7CFF]/18 via-[#72C7FF]/12 to-transparent rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 right-1/4 w-[450px] h-[450px] bg-[#D6B36A]/12 rounded-full blur-[140px]" />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-[#8B7CFF]/18 via-[#72C7FF]/12 to-transparent rounded-full blur-[170px]" />
+        <div className="absolute top-1/3 right-1/4 w-[700px] h-[700px] bg-[#D6B36A]/12 rounded-full blur-[170px]" />
       </motion.div>
 
       {/* Main 2-Column Hero Grid with Layered Parallax */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center z-10 w-full mt-4 sm:mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center z-10 w-full mt-4 sm:mt-8">
         
         {/* Left Column: Layer 4 Depth Typography */}
         <motion.div
@@ -57,26 +57,26 @@ const ImmersiveHero = ({ onOpenAuth }) => {
             opacity: layer4TypoOpacity,
             filter: layer4TypoBlur
           }}
-          className="lg:col-span-7 space-y-5 sm:space-y-6 text-left"
+          className="lg:col-span-7 space-y-7 sm:space-y-8 text-left"
         >
           {/* Top Pill Badge */}
           <motion.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs font-mono font-bold shadow-sm"
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full liquid-glass-base border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs sm:text-sm font-mono font-bold shadow-sm"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#8B7CFF]" />
+            <Sparkles className="w-4 h-4 text-[#8B7CFF]" />
             <span>Peer-to-Peer Knowledge Exchange Network</span>
           </motion.div>
 
-          {/* Masked Headline - Balanced Medium Size */}
-          <div className="space-y-1 overflow-hidden">
+          {/* Masked Headline - Large and Imposing */}
+          <div className="space-y-1 sm:space-y-2 overflow-hidden">
             <motion.h1
               initial={{ y: '100%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white"
+              className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[5.2rem] xl:text-[5.8rem] font-extrabold tracking-normal leading-[1.1] text-white"
             >
               YOUR KNOWLEDGE
             </motion.h1>
@@ -84,10 +84,10 @@ const ImmersiveHero = ({ onOpenAuth }) => {
               initial={{ y: '100%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
               transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white flex items-center gap-3"
+              className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[5.2rem] xl:text-[5.8rem] font-extrabold tracking-normal leading-[1.1] text-white flex items-center gap-3 sm:gap-6"
             >
               <span>HAS</span>
-              <span className="accent-gradient-text drop-shadow-[0_0_25px_rgba(139,124,255,0.4)]">VALUE.</span>
+              <span className="accent-gradient-text drop-shadow-[0_0_40px_rgba(139,124,255,0.5)]">VALUE.</span>
             </motion.h1>
           </div>
 

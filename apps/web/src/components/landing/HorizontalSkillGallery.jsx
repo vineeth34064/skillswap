@@ -39,8 +39,8 @@ const HorizontalSkillGallery = () => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass-base border border-[#8B7CFF]/30 text-[#8B7CFF] text-xs sm:text-sm font-mono font-bold shadow-sm">
               <Sparkles className="w-4 h-4 text-[#8B7CFF]" /> Curated Knowledge Exchanges
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">
-              Explore Popular <span className="accent-gradient-rare drop-shadow-[0_0_20px_rgba(214,179,106,0.4)]">Skills</span>
+            <h2 className="text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.08]">
+              Explore Popular <span className="accent-gradient-rare drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">Skills</span>
             </h2>
           </div>
 

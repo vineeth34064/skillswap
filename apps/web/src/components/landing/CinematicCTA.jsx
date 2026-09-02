@@ -22,12 +22,12 @@ const CinematicCTA = () => {
             <Sparkles className="w-4 h-4 text-[#D6B36A]" /> The Invitation
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-snug font-sans">
+          <h2 className="text-[2.6rem] sm:text-6xl md:text-8xl lg:text-[7.5rem] font-black text-white tracking-tight leading-[1.05] font-sans">
             EXCHANGE SKILLS. <br />
-            <span className="accent-gradient-rare drop-shadow-[0_0_25px_rgba(214,179,106,0.4)]">NOT MONEY.</span>
+            <span className="accent-gradient-rare drop-shadow-[0_0_40px_rgba(214,179,106,0.5)]">NOT MONEY.</span>
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#A1ACBC] max-w-xl mx-auto font-sans leading-relaxed">
+          <p className="text-lg sm:text-2xl text-[#A1ACBC] max-w-2xl mx-auto font-sans leading-relaxed">
             Your knowledge has value. Share what you know, learn what you need, and connect with peers worldwide.
           </p>
         </ScrollReveal>

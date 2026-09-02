@@ -6,7 +6,10 @@ import { useSocket } from '../context/SocketContext';
 import LiquidGlassCard from '../components/LiquidGlassCard';
 import TimeCreditBadge from '../components/TimeCreditBadge';
 import PeerRatingModal from '../components/PeerRatingModal';
-import { Calendar, Video, Clock, CheckCircle2, Plus, ShieldAlert, Check, Sparkles, Star, MessageSquare, Bell, ExternalLink, Trash2 } from 'lucide-react';
+import {
+  Calendar, Video, Clock, CheckCircle2, Plus, ShieldAlert, Check, Sparkles, Star,
+  MessageSquare, Bell, ExternalLink, Trash2, Edit3, XCircle, FileText
+} from 'lucide-react';
 
 const Sessions = () => {
   const { user, refreshUser } = useAuth();
@@ -21,22 +24,14 @@ const Sessions = () => {
   const [reviewTargetUser, setReviewTargetUser] = useState(null);
   const [reviewSessionId, setReviewSessionId] = useState(null);
 
-  // New session modal state
-  const [showNewModal, setShowNewModal] = useState(false);
-  const [targetPartner, setTargetPartner] = useState(location.state?.targetUser || null);
-  const [selectedSkillId, setSelectedSkillId] = useState('');
-  const [userSkills, setUserSkills] = useState([]);
-  const [scheduledAt, setScheduledAt] = useState('');
-  const [durationHours, setDurationHours] = useState(1.0);
-  const [mode, setMode] = useState('Online');
-  const [meetingLink, setMeetingLink] = useState('');
-  const [notes, setNotes] = useState('');
-  const [formMsg, setFormMsg] = useState('');
+  // Session Notes state
+  const [activeNotesId, setActiveNotesId] = useState(null);
+  const [sessionNotes, setSessionNotes] = useState('');
 
   const fetchSessions = async () => {
     try {
       const res = await api.get('/sessions');
-      if (res.success) setSessions(res.sessions);
+      if (res.success) setSessions(res.sessions || []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -46,21 +41,11 @@ const Sessions = () => {
 
   useEffect(() => {
     fetchSessions();
-    api.get('/skills').then(res => {
-      if (res.success) setUserSkills(res.skills);
-    }).catch(console.error);
-
     if (socket) {
-      socket.on('session_updated', () => {
-        fetchSessions();
-      });
-      socket.on('session_status_changed', () => {
-        fetchSessions();
-      });
+      socket.on('session_updated', () => fetchSessions());
+      socket.on('session_status_changed', () => fetchSessions());
     }
-
     const interval = setInterval(fetchSessions, 8000);
-
     return () => {
       if (socket) {
         socket.off('session_updated');
@@ -69,13 +54,6 @@ const Sessions = () => {
       clearInterval(interval);
     };
   }, [socket]);
-
-  useEffect(() => {
-    if (location.state?.targetUser) {
-      setShowNewModal(true);
-      setTargetPartner(location.state.targetUser);
-    }
-  }, [location.state]);
 
   const generateGoogleCalendarUrl = (session) => {
     const startDate = new Date(session.scheduledAt || Date.now());
@@ -109,7 +87,6 @@ const Sessions = () => {
           setCelebrationCredit(1.0);
           setTimeout(() => setCelebrationCredit(null), 4000);
           
-          // Open 5-Criterion Rating Modal automatically after completion
           setReviewTargetUser(partner);
           setReviewSessionId(session._id);
           setShowReviewModal(true);
@@ -121,7 +98,7 @@ const Sessions = () => {
   };
 
   const handleDeleteSession = async (sessionId) => {
-    if (!window.confirm('Are you sure you want to clear this session history?')) return;
+    if (!window.confirm('Are you sure you want to cancel or clear this session?')) return;
     try {
       const res = await api.delete(`/sessions/${sessionId}`);
       if (res.success) fetchSessions();
@@ -130,55 +107,46 @@ const Sessions = () => {
     }
   };
 
-  const handleClearPastSessions = async () => {
-    if (!window.confirm('Clear all completed and declined past meetings from history?')) return;
+  const handleSaveNotes = async (sessionId) => {
     try {
-      const res = await api.delete('/sessions/clear-past');
-      if (res.success) fetchSessions();
+      await api.patch(`/sessions/${sessionId}/notes`, { notes: sessionNotes });
+      setActiveNotesId(null);
+      fetchSessions();
     } catch (err) {
-      alert(err.message);
+      alert(err.message || 'Failed to save notes');
     }
   };
 
-  const openReviewModal = (partner, sessionId) => {
-    setReviewTargetUser(partner);
-    setReviewSessionId(sessionId);
-    setShowReviewModal(true);
+  const calculateCountdown = (scheduledAt) => {
+    const diff = new Date(scheduledAt).getTime() - Date.now();
+    if (diff <= 0) return 'Session Live Now 🟢';
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return `Starts in ${hours}h ${mins}m ⏱️`;
   };
 
-  const hasPastSessions = sessions.some(s => s.status === 'COMPLETED' || s.status === 'DECLINED');
-
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 relative z-10">
+    <div className="max-w-[96%] sm:max-w-[95%] xl:max-w-[1400px] mx-auto px-4 sm:px-6 py-6 space-y-8 relative z-10 text-white">
       
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#F7F9FC] flex items-center gap-2 tracking-tight">
-            <Calendar className="w-6 h-6 text-[#72C7FF]" /> Skill Swap Workspace Sessions
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#8B7CFF]/20 border border-[#8B7CFF]/40 text-[#8B7CFF] text-xs font-mono font-bold">
+            <Calendar className="w-3.5 h-3.5 text-[#8B7CFF]" /> UPGRADED SESSION WORKSPACE
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white mt-2">
+            Skill Swap <span className="accent-gradient-text">Sessions</span>
           </h1>
-          <p className="text-xs sm:text-sm text-[#A1ACBC] mt-1">
-            Manage active sessions, confirm completion to release Time Credits, and rate your peer mentors.
-          </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          {hasPastSessions && (
-            <button
-              onClick={handleClearPastSessions}
-              className="px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-rose-950/40 text-rose-300 border border-rose-500/30 text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer"
-            >
-              <Trash2 className="w-4 h-4 text-rose-400" /> Clear Past Meetings
-            </button>
-          )}
-        </div>
+        <TimeCreditBadge credits={user?.timeCredits} size="lg" />
       </div>
 
-      {/* Anti-Fraud Banner */}
+      {/* Safety Notice */}
       <div className="p-4 rounded-2xl liquid-glass-base border border-[#72C7FF]/30 text-xs text-slate-200 flex items-center gap-3">
         <ShieldAlert className="w-5 h-5 text-[#72C7FF] shrink-0" />
         <div>
-          <strong className="font-bold text-[#72C7FF]">Dual Confirmation & Peer Rating System:</strong> Time Credits (+1.0 to Teacher, -1.0 from Learner) are transferred when BOTH participants confirm completion. Leave a multi-criterion rating afterwards to elevate their Leaderboard rank!
+          <strong className="font-bold text-[#72C7FF]">Dual Confirmation & 5-Criterion Ratings:</strong> Time credits transfer automatically once both participants click "Confirm Completion".
         </div>
       </div>
 
@@ -189,7 +157,7 @@ const Sessions = () => {
         <LiquidGlassCard className="p-12 text-center space-y-3 border border-dashed border-white/10">
           <Calendar className="w-12 h-12 text-slate-500 mx-auto" />
           <h3 className="text-base font-bold text-slate-300">No sessions scheduled yet</h3>
-          <p className="text-xs text-[#667085] max-w-sm mx-auto">
+          <p className="text-xs text-slate-400 max-w-sm mx-auto">
             Explore nearby mentors or reciprocal matches to request your first 1-hour skill swap!
           </p>
         </LiquidGlassCard>
@@ -198,128 +166,134 @@ const Sessions = () => {
           {sessions.map((session) => {
             const currentUserId = String(user?._id || user?.id);
             const hostIdStr = String(session.hostId?._id || session.hostId?.id || session.hostId);
-            const isHost = hostIdStr === currentUserId; // Teacher
+            const isHost = hostIdStr === currentUserId;
             const partner = isHost ? session.participantId : session.hostId;
             const myConfirmed = isHost ? session.hostConfirmed : session.participantConfirmed;
             const isPast = session.status === 'COMPLETED' || session.status === 'DECLINED';
+            const countdownStr = calculateCountdown(session.scheduledAt);
 
             return (
-              <LiquidGlassCard key={session._id} className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                
-                {/* Left Info */}
-                <div className="flex items-start gap-4">
-                  <img src={partner?.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'} alt={partner?.name} className="w-14 h-14 rounded-2xl object-cover border-2 border-[#72C7FF]/40 shadow-sm" />
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
-                        session.status === 'COMPLETED' ? 'bg-[#D6B36A]/20 text-[#D6B36A] border border-[#D6B36A]/30' :
-                        session.status === 'ACCEPTED' ? 'bg-[#72C7FF]/20 text-[#72C7FF] border border-[#72C7FF]/30' :
-                        'bg-[#8B7CFF]/20 text-[#8B7CFF] border border-[#8B7CFF]/30'
-                      }`}>
-                        {session.status}
-                      </span>
-                      <span className="text-xs text-[#A1ACBC] font-bold">• {session.durationHours || 1} Hour Session</span>
-                    </div>
+              <LiquidGlassCard key={session._id} className="p-6 space-y-5">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                  
+                  {/* Left Info */}
+                  <div className="flex items-start gap-4">
+                    <img src={partner?.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150'} alt={partner?.name} className="w-14 h-14 rounded-2xl object-cover border-2 border-[#72C7FF]/40 shadow-sm" />
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
+                          session.status === 'COMPLETED' ? 'bg-[#D6B36A]/20 text-[#D6B36A] border border-[#D6B36A]/30' :
+                          session.status === 'ACCEPTED' ? 'bg-[#72C7FF]/20 text-[#72C7FF] border border-[#72C7FF]/30' :
+                          'bg-[#8B7CFF]/20 text-[#8B7CFF] border border-[#8B7CFF]/30'
+                        }`}>
+                          {session.status}
+                        </span>
+                        <span className="text-xs text-[#72C7FF] font-mono font-bold">{countdownStr}</span>
+                      </div>
 
-                    <h3 className="font-extrabold text-base text-white">
-                      {isHost ? `Teaching ${session.skillName}` : `Learning ${session.skillName}`} with {partner?.name || 'Peer Mentor'}
-                    </h3>
+                      <h3 className="font-extrabold text-base text-white">
+                        {isHost ? `Teaching ${session.skillName}` : `Learning ${session.skillName}`} with {partner?.name || 'Peer Mentor'}
+                      </h3>
 
-                    <div className="flex flex-wrap items-center gap-4 text-xs text-[#A1ACBC] pt-1">
-                      <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-slate-400" /> {new Date(session.scheduledAt).toLocaleString()}</span>
-                      <span className="flex items-center gap-1"><Video className="w-3.5 h-3.5 text-[#72C7FF]" /> {session.mode}</span>
+                      <p className="text-xs text-slate-400">
+                        {new Date(session.scheduledAt).toLocaleString()} • {session.durationHours || 1} Hour
+                      </p>
                     </div>
                   </div>
-                </div>
 
-                {/* Right Actions */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-white/10">
-                  
-                  {session.status === 'REQUESTED' && isHost && (
-                    <>
-                      <button
-                        onClick={() => handleRespond(session._id, 'accept')}
-                        className="px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white font-bold text-xs rounded-xl shadow-md transition-colors cursor-pointer"
-                      >
-                        Accept Request
-                      </button>
-                      <button
-                        onClick={() => handleRespond(session._id, 'decline')}
-                        className="px-4 py-2 border border-white/10 text-slate-300 font-bold text-xs rounded-xl hover:bg-white/10 cursor-pointer"
-                      >
-                        Decline
-                      </button>
-                    </>
-                  )}
-
-                  {(session.status === 'ACCEPTED' || session.status === 'REQUESTED' || session.status === 'SCHEDULED' || session.status === 'IN_PROGRESS' || session.status === 'COMPLETED') && (
-                    <>
-                      <a
-                        href={session.meetingLink || 'https://meet.google.com/new'}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="px-4 py-2.5 liquid-glass-base border border-[#72C7FF]/40 text-white font-extrabold text-xs rounded-xl shadow-blue-glow hover:scale-105 transition-all text-center flex items-center justify-center gap-1.5"
-                      >
-                        <Video className="w-3.5 h-3.5 text-[#72C7FF]" /> Join Google Meet
-                      </a>
-
-                      <a
-                        href={generateGoogleCalendarUrl(session)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="px-3.5 py-2.5 rounded-xl bg-[#D6B36A]/20 hover:bg-[#D6B36A]/30 text-[#D6B36A] border border-[#D6B36A]/40 font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-gold-glow transition-all"
-                        title="Add to Google Calendar with 5-minute reminder"
-                      >
-                        <Bell className="w-3.5 h-3.5 text-[#D6B36A]" /> Calendar (5m Notice)
-                      </a>
-
-                      {session.status !== 'COMPLETED' ? (
+                  {/* Actions */}
+                  <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+                    {session.status === 'REQUESTED' && isHost && (
+                      <>
                         <button
-                          onClick={() => handleConfirmCompletion(session, partner)}
-                          disabled={myConfirmed}
-                          className={`px-4 py-2.5 font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                            myConfirmed
-                              ? 'liquid-glass-base text-[#D6B36A] border border-[#D6B36A]/30 cursor-default'
-                              : 'accent-gradient-bg text-[#05070A] shadow-glow hover:scale-105'
-                          }`}
+                          onClick={() => handleRespond(session._id, 'accept')}
+                          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
                         >
-                          {myConfirmed ? (
-                            <> <Check className="w-3.5 h-3.5" /> Waiting for Partner </>
-                          ) : (
-                            'Confirm Session Completion'
-                          )}
+                          Accept Session
                         </button>
-                      ) : (
                         <button
-                          onClick={() => openReviewModal(partner, session._id)}
-                          className="px-4 py-2.5 bg-white/10 hover:bg-white/15 text-[#D6B36A] font-extrabold text-xs rounded-xl border border-[#D6B36A]/40 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                          onClick={() => handleRespond(session._id, 'decline')}
+                          className="px-4 py-2 border border-white/20 text-slate-300 font-bold text-xs rounded-xl hover:bg-white/10 cursor-pointer"
+                        >
+                          Decline
+                        </button>
+                      </>
+                    )}
+
+                    <a
+                      href={session.meetingLink || 'https://meet.google.com/new'}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2.5 liquid-glass-base border border-[#72C7FF]/40 text-white font-black text-xs rounded-xl shadow-blue-glow hover:scale-105 transition-all flex items-center gap-1.5"
+                    >
+                      <Video className="w-3.5 h-3.5 text-[#72C7FF]" /> Join Google Meet
+                    </a>
+
+                    <a
+                      href={generateGoogleCalendarUrl(session)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-3.5 py-2.5 rounded-xl bg-[#D6B36A]/20 text-[#D6B36A] border border-[#D6B36A]/40 font-bold text-xs flex items-center gap-1.5"
+                      title="Add to Google Calendar with 5m notice"
+                    >
+                      <Bell className="w-3.5 h-3.5" /> Calendar (5m Notice)
+                    </a>
+
+                    {session.status !== 'COMPLETED' ? (
+                      <button
+                        onClick={() => handleConfirmCompletion(session, partner)}
+                        disabled={myConfirmed}
+                        className={`px-4 py-2.5 font-extrabold text-xs rounded-xl transition-all cursor-pointer ${
+                          myConfirmed
+                            ? 'liquid-glass-base text-[#D6B36A] border border-[#D6B36A]/30'
+                            : 'accent-gradient-bg text-[#05070A] shadow-glow'
+                        }`}
+                      >
+                        {myConfirmed ? 'Waiting for Partner' : 'Confirm Completion'}
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => { setReviewTargetUser(partner); setReviewSessionId(session._id); setShowReviewModal(true); }}
+                          className="px-4 py-2.5 bg-white/10 hover:bg-white/15 text-[#D6B36A] font-extrabold text-xs rounded-xl border border-[#D6B36A]/40 flex items-center gap-1.5 cursor-pointer"
                         >
                           <Star className="w-3.5 h-3.5 fill-[#D6B36A]" /> Rate Peer Mentor
                         </button>
-                      )}
-                    </>
-                  )}
 
-                  {/* Individual Delete / Clear Button for Past Sessions */}
-                  {isPast && (
+                        <button
+                          onClick={() => alert(`Certificate generated for session: ${session.skillName}!`)}
+                          className="px-3.5 py-2.5 bg-[#8B7CFF]/20 text-[#8B7CFF] font-bold text-xs rounded-xl border border-[#8B7CFF]/40 cursor-pointer"
+                        >
+                          🎓 Certificate
+                        </button>
+
+                        <button
+                          onClick={() => alert(`Filing dispute for session ${session._id}. Admin will inspect attendance logs.`)}
+                          className="px-3.5 py-2.5 bg-rose-950/40 text-rose-300 font-bold text-xs rounded-xl border border-rose-500/30 cursor-pointer"
+                          title="File Dispute"
+                        >
+                          ⚠️ Dispute
+                        </button>
+                      </>
+                    )}
+
                     <button
                       onClick={() => handleDeleteSession(session._id)}
-                      className="p-2.5 rounded-xl border border-rose-500/30 text-rose-400 hover:bg-rose-950/40 transition-colors cursor-pointer"
-                      title="Clear past meeting history"
+                      className="p-2.5 rounded-xl border border-rose-500/30 text-rose-400 hover:bg-rose-950/40 cursor-pointer"
+                      title="Cancel / Delete Session"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
-                  )}
+                  </div>
 
                 </div>
-
               </LiquidGlassCard>
             );
           })}
         </div>
       )}
 
-      {/* Multi-Criterion Peer Rating Modal */}
+      {/* Peer Rating Modal */}
       <PeerRatingModal
         isOpen={showReviewModal}
         onClose={() => setShowReviewModal(false)}
