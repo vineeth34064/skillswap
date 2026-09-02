@@ -131,22 +131,22 @@ const Leaderboard = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-8 py-4 sm:py-6 space-y-6 sm:space-y-8 relative z-10"
+      className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 relative z-10"
     >
       
       {/* Background Spatial Glows */}
-      <div className="absolute top-10 right-1/4 w-[600px] h-[600px] bg-[#D6B36A]/12 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-10 right-1/4 w-[400px] h-[400px] bg-[#D6B36A]/12 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Header */}
-      <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D6B36A]/20 border border-[#D6B36A]/40 text-[#D6B36A] text-xs font-mono font-bold shadow-gold-glow">
-            <Trophy className="w-3.5 h-3.5 text-[#D6B36A]" /> GLOBAL COMMUNITY RANKINGS
+      <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#D6B36A]/20 border border-[#D6B36A]/40 text-[#D6B36A] text-[11px] font-mono font-bold shadow-gold-glow">
+            <Trophy className="w-3 h-3 text-[#D6B36A]" /> GLOBAL COMMUNITY RANKINGS
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
             SkillSwap <span className="text-[#D6B36A] drop-shadow-[0_0_25px_rgba(214,179,106,0.4)]">Leaderboard</span>
           </h1>
-          <p className="text-sm text-[#B0BAC9]">
+          <p className="text-xs sm:text-sm text-[#B0BAC9]">
             Recognizing top mentors, time credit champions, and most active knowledge sharers.
           </p>
         </div>

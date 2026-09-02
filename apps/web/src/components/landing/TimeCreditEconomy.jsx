@@ -43,11 +43,11 @@ const TimeCreditEconomy = () => {
             <Zap className="w-4 h-4 text-[#D6B36A]" /> The Time Credit System
           </div>
 
-          <h2 className="text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white tracking-tight leading-[1.08]">
-            TIME IS THE <span className="text-[#D6B36A] drop-shadow-[0_0_35px_rgba(214,179,106,0.45)]">CURRENCY.</span>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">
+            TIME IS THE <span className="text-[#D6B36A] drop-shadow-[0_0_20px_rgba(214,179,106,0.4)]">CURRENCY.</span>
           </h2>
 
-          <p className="text-base sm:text-xl text-[#A1ACBC] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#A1ACBC] max-w-xl mx-auto leading-relaxed">
             You don't need a direct skill partner. Teach 1 hour to any member to earn 1 Time Credit, then spend it learning whatever you want from anyone else!
           </p>
         </ScrollReveal>

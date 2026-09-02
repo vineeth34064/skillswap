@@ -65,8 +65,8 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
 
   return (
     <>
-      <header className="fixed top-3 sm:top-4 left-0 right-0 z-50 px-2 sm:px-4 w-full max-w-[98%] sm:max-w-[96%] mx-auto pointer-events-none">
-        <div className="pointer-events-auto rounded-2xl sm:rounded-full px-4 sm:px-6 lg:px-8 py-3 border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_20px_rgba(139,124,255,0.12)] flex items-center justify-between transition-all duration-300 hover:border-white/35 backdrop-blur-2xl bg-white/[0.05] hover:bg-white/[0.08] relative overflow-hidden">
+      <header className="fixed top-2.5 sm:top-3 left-0 right-0 z-50 px-2 sm:px-4 w-full max-w-6xl mx-auto pointer-events-none">
+        <div className="pointer-events-auto rounded-2xl sm:rounded-full px-3.5 sm:px-5 lg:px-6 py-2 sm:py-2.5 border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37),0_0_20px_rgba(139,124,255,0.12)] flex items-center justify-between transition-all duration-300 hover:border-white/35 backdrop-blur-2xl bg-white/[0.05] hover:bg-white/[0.08] relative overflow-hidden">
           
           {/* Glass Specular Top Highlight */}
           <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
@@ -77,12 +77,12 @@ const GlassDockNavbar = ({ onOpenCmdK }) => {
             onClick={handleLogoClick}
             onMouseEnter={() => setLogoHovered(true)}
             onMouseLeave={() => setLogoHovered(false)}
-            className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink-0"
+            className="flex items-center gap-2 sm:gap-2.5 group cursor-pointer shrink-0"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-2xl accent-gradient-bg flex items-center justify-center shadow-glow transition-transform duration-300 group-hover:scale-110">
-              <Repeat className={`w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 text-[#101827] transition-transform duration-500 ${logoHovered ? 'rotate-180' : ''}`} />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl accent-gradient-bg flex items-center justify-center shadow-glow transition-transform duration-300 group-hover:scale-105">
+              <Repeat className={`w-4 h-4 text-[#101827] transition-transform duration-500 ${logoHovered ? 'rotate-180' : ''}`} />
             </div>
-            <span className="font-sans font-black text-base sm:text-lg tracking-tight text-white flex items-center">
+            <span className="font-sans font-bold text-sm sm:text-base tracking-tight text-white flex items-center">
               Skill<span className="accent-gradient-text drop-shadow-[0_0_20px_rgba(139,124,255,0.4)]">Swap</span>
             </span>
           </Link>

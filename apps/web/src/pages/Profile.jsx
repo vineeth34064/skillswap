@@ -35,15 +35,15 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-8 py-4 sm:py-6 space-y-6 relative z-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 relative z-10">
       
       {/* Profile Top Hero Card */}
-      <SpotlightCard level="premium" className="p-8 relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+      <SpotlightCard level="premium" className="p-5 sm:p-6 relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
           <img
             src={profile.avatar}
             alt={profile.name}
-            className="w-24 h-24 rounded-3xl object-cover border-4 border-[#8B7CFF]/40 shadow-glow"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-[#8B7CFF]/40 shadow-glow"
           />
 
           <div className="space-y-2 flex-1">

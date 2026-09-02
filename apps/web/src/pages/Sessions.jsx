@@ -149,15 +149,15 @@ const Sessions = () => {
   const hasPastSessions = sessions.some(s => s.status === 'COMPLETED' || s.status === 'DECLINED');
 
   return (
-    <div className="max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-8 py-4 sm:py-6 space-y-6 relative z-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 relative z-10">
       
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-[#F7F9FC] flex items-center gap-2 tracking-tight">
-            <Calendar className="w-7 h-7 text-[#72C7FF]" /> Skill Swap Workspace Sessions
+          <h1 className="text-2xl font-bold text-[#F7F9FC] flex items-center gap-2 tracking-tight">
+            <Calendar className="w-6 h-6 text-[#72C7FF]" /> Skill Swap Workspace Sessions
           </h1>
-          <p className="text-sm text-[#A1ACBC] mt-1">
+          <p className="text-xs sm:text-sm text-[#A1ACBC] mt-1">
             Manage active sessions, confirm completion to release Time Credits, and rate your peer mentors.
           </p>
         </div>

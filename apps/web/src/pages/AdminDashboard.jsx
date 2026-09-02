@@ -48,15 +48,15 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 relative z-10">
       
       {/* Title */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold text-white flex items-center gap-2">
-            <Shield className="w-7 h-7 text-[#D6B36A]" /> Platform Admin Dashboard
+          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+            <Shield className="w-6 h-6 text-[#D6B36A]" /> Platform Admin Dashboard
           </h1>
-          <p className="text-sm text-[#94A3B8] mt-1">
+          <p className="text-xs sm:text-sm text-[#94A3B8] mt-1">
             Supervise user integrity, resolve session disputes, and maintain platform health.
           </p>
         </div>

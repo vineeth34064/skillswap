@@ -37,21 +37,21 @@ const ParallaxTypography = () => {
         <div className="space-y-2.5 sm:space-y-4 select-none overflow-hidden py-4">
           <motion.div
             style={{ x: xLeft }}
-            className="text-[3rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white/90 font-mono leading-none"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white/90 font-mono leading-tight"
           >
             EVERYONE
           </motion.div>
 
           <motion.div
             style={{ x: xRight }}
-            className="text-[3rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight accent-gradient-rare leading-none"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight accent-gradient-rare leading-tight"
           >
             KNOWS
           </motion.div>
 
           <motion.div
             style={{ scale: scaleCenter, opacity: opacityCenter }}
-            className="text-[3rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.5rem] font-black tracking-tight text-white leading-none"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight"
           >
             SOMETHING.
           </motion.div>
@@ -63,7 +63,7 @@ const ParallaxTypography = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8 }}
-          className="text-lg sm:text-2xl text-[#A1ACBC] max-w-3xl mx-auto font-sans leading-relaxed"
+          className="text-sm sm:text-base text-[#A1ACBC] max-w-2xl mx-auto font-sans leading-relaxed"
         >
           The skill you practice every day — whether coding C++, cooking, or playing guitar — could be the exact knowledge someone else has wanted to master for years.
         </motion.p>

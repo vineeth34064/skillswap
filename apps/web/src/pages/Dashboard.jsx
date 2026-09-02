@@ -70,117 +70,117 @@ const Dashboard = ({ onOpenOnboarding }) => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-8 py-4 sm:py-6 space-y-6 sm:space-y-8 relative z-10"
+      className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6 relative z-10"
     >
       
       {/* Background Spatial Glows */}
-      <div className="absolute top-10 left-1/3 w-[550px] h-[550px] bg-[#8B7CFF]/12 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-10 left-1/3 w-[400px] h-[400px] bg-[#8B7CFF]/12 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Top Welcome Header */}
-      <motion.div variants={itemVariants} className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2 border-b border-white/5">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#8B7CFF]/15 border border-[#8B7CFF]/30 text-[#8B7CFF] text-xs font-mono font-bold">
-            <Sparkles className="w-3.5 h-3.5 text-[#8B7CFF]" /> ACTIVE USER DASHBOARD
+      <motion.div variants={itemVariants} className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-2 border-b border-white/5">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#8B7CFF]/15 border border-[#8B7CFF]/30 text-[#8B7CFF] text-[11px] font-mono font-bold">
+            <Sparkles className="w-3 h-3 text-[#8B7CFF]" /> ACTIVE USER DASHBOARD
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
             Welcome back, <span className="accent-gradient-text">{user?.name}</span> 👋
           </h1>
-          <p className="text-sm text-[#B0BAC9]">
+          <p className="text-xs sm:text-sm text-[#B0BAC9]">
             {user?.city} • Member Trust Score: <strong className="text-emerald-400 font-mono">{user?.trustScore || 90}%</strong>
           </p>
         </div>
 
         {/* Action Pills */}
-        <div className="flex flex-wrap items-center gap-3.5 shrink-0">
-          <TimeCreditBadge credits={user?.timeCredits} size="lg" />
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <TimeCreditBadge credits={user?.timeCredits} size="md" />
           
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={onOpenOnboarding}
-            className="px-5 py-3 rounded-full bg-[#D6B36A]/20 hover:bg-[#D6B36A]/30 text-[#D6B36A] border border-[#D6B36A]/40 font-extrabold text-xs sm:text-sm shadow-gold-glow flex items-center gap-2.5 whitespace-nowrap shrink-0 cursor-pointer"
+            className="px-4 py-2 rounded-full bg-[#D6B36A]/20 hover:bg-[#D6B36A]/30 text-[#D6B36A] border border-[#D6B36A]/40 font-bold text-xs shadow-gold-glow flex items-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
           >
-            <Settings className="w-4 h-4 text-[#D6B36A]" />
-            <span>Teach & Learn Skills Setup</span>
+            <Settings className="w-3.5 h-3.5 text-[#D6B36A]" />
+            <span>Teach & Learn Setup</span>
           </motion.button>
 
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => navigate('/discover')}
-            className="px-6 py-3 rounded-full accent-gradient-bg text-[#101827] font-black text-xs sm:text-sm shadow-glow flex items-center gap-2.5 whitespace-nowrap shrink-0 cursor-pointer"
+            className="px-4 py-2 rounded-full accent-gradient-bg text-[#101827] font-bold text-xs shadow-glow flex items-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
           >
             <span>Find Skill Swap</span>
-            <ArrowRight className="w-4 h-4 text-[#101827]" />
+            <ArrowRight className="w-3.5 h-3.5 text-[#101827]" />
           </motion.button>
         </div>
       </motion.div>
 
       {/* Stats Quick Bar */}
-      <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <motion.div whileHover={{ y: -4, scale: 1.02 }} transition={{ duration: 0.2 }}>
-          <LiquidGlassCard className="p-5 flex items-center gap-4 bg-[#101827]/80">
-            <div className="w-12 h-12 rounded-2xl bg-[#8B7CFF]/20 text-[#8B7CFF] border border-[#8B7CFF]/30 flex items-center justify-center font-bold text-xl">
+      <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <motion.div whileHover={{ y: -3, scale: 1.01 }} transition={{ duration: 0.2 }}>
+          <LiquidGlassCard className="p-4 flex items-center gap-3.5 bg-[#101827]/80">
+            <div className="w-10 h-10 rounded-xl bg-[#8B7CFF]/20 text-[#8B7CFF] border border-[#8B7CFF]/30 flex items-center justify-center font-bold text-lg shrink-0">
               ⚡
             </div>
             <div>
-              <div className="text-2xl font-black text-white font-mono">{user?.timeCredits || 2.0}</div>
-              <div className="text-xs text-[#B0BAC9] font-semibold">Time Credits Available</div>
+              <div className="text-xl font-bold text-white font-mono">{user?.timeCredits || 2.0}</div>
+              <div className="text-[11px] text-[#B0BAC9] font-medium">Time Credits Available</div>
             </div>
           </LiquidGlassCard>
         </motion.div>
 
-        <motion.div whileHover={{ y: -4, scale: 1.02 }} transition={{ duration: 0.2 }}>
-          <LiquidGlassCard className="p-5 flex items-center gap-4 bg-[#101827]/80">
-            <div className="w-12 h-12 rounded-2xl bg-[#72C7FF]/20 text-[#72C7FF] border border-[#72C7FF]/30 flex items-center justify-center font-bold text-xl">
+        <motion.div whileHover={{ y: -3, scale: 1.01 }} transition={{ duration: 0.2 }}>
+          <LiquidGlassCard className="p-4 flex items-center gap-3.5 bg-[#101827]/80">
+            <div className="w-10 h-10 rounded-xl bg-[#72C7FF]/20 text-[#72C7FF] border border-[#72C7FF]/30 flex items-center justify-center font-bold text-lg shrink-0">
               ⏱️
             </div>
             <div>
-              <div className="text-2xl font-black text-white font-mono">{user?.teachingHours || 0} Hours</div>
-              <div className="text-xs text-[#B0BAC9] font-semibold">Spent Teaching Peers</div>
+              <div className="text-xl font-bold text-white font-mono">{user?.teachingHours || 0} Hours</div>
+              <div className="text-[11px] text-[#B0BAC9] font-medium">Spent Teaching Peers</div>
             </div>
           </LiquidGlassCard>
         </motion.div>
 
-        <motion.div whileHover={{ y: -4, scale: 1.02 }} transition={{ duration: 0.2 }}>
-          <LiquidGlassCard className="p-5 flex items-center gap-4 bg-[#101827]/80">
-            <div className="w-12 h-12 rounded-2xl bg-[#D6B36A]/20 text-[#D6B36A] border border-[#D6B36A]/30 flex items-center justify-center font-bold text-xl">
+        <motion.div whileHover={{ y: -3, scale: 1.01 }} transition={{ duration: 0.2 }}>
+          <LiquidGlassCard className="p-4 flex items-center gap-3.5 bg-[#101827]/80">
+            <div className="w-10 h-10 rounded-xl bg-[#D6B36A]/20 text-[#D6B36A] border border-[#D6B36A]/30 flex items-center justify-center font-bold text-lg shrink-0">
               🛡️
             </div>
             <div>
-              <div className="text-2xl font-black text-white font-mono">{user?.trustScore || 90} / 100</div>
-              <div className="text-xs text-[#B0BAC9] font-semibold">Trust Score Rating</div>
+              <div className="text-xl font-bold text-white font-mono">{user?.trustScore || 90} / 100</div>
+              <div className="text-[11px] text-[#B0BAC9] font-medium">Trust Score Rating</div>
             </div>
           </LiquidGlassCard>
         </motion.div>
 
-        <motion.div whileHover={{ y: -4, scale: 1.02 }} transition={{ duration: 0.2 }}>
-          <LiquidGlassCard className="p-5 flex items-center gap-4 bg-[#101827]/80">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-xl">
+        <motion.div whileHover={{ y: -3, scale: 1.01 }} transition={{ duration: 0.2 }}>
+          <LiquidGlassCard className="p-4 flex items-center gap-3.5 bg-[#101827]/80">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-lg shrink-0">
               🤝
             </div>
             <div>
-              <div className="text-2xl font-black text-white font-mono">{user?.completedSessions || 0} Swaps</div>
-              <div className="text-xs text-[#B0BAC9] font-semibold">Completed Exchanges</div>
+              <div className="text-xl font-bold text-white font-mono">{user?.completedSessions || 0} Swaps</div>
+              <div className="text-[11px] text-[#B0BAC9] font-medium">Completed Exchanges</div>
             </div>
           </LiquidGlassCard>
         </motion.div>
       </motion.div>
 
       {/* Grid: Matches & Sessions */}
-      <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Left 2 Cols: Reciprocal Match Radar */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-[#8B7CFF]/20 flex items-center justify-center text-[#8B7CFF]">
-                <Repeat className="w-4 h-4 text-[#8B7CFF]" />
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-[#8B7CFF]/20 flex items-center justify-center text-[#8B7CFF]">
+                <Repeat className="w-3.5 h-3.5 text-[#8B7CFF]" />
               </div>
-              <h2 className="text-xl font-extrabold text-white">Reciprocal Match Radar</h2>
+              <h2 className="text-lg font-bold text-white">Reciprocal Match Radar</h2>
             </div>
             <Link to="/matches" className="text-xs font-bold text-[#8B7CFF] hover:underline flex items-center gap-1">
-              View All Matches <ArrowRight className="w-3.5 h-3.5" />
+              View All Matches <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
 

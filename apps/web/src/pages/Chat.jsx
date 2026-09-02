@@ -141,8 +141,8 @@ const Chat = () => {
   const activePartner = activeConv?.participants?.find(p => p._id !== user._id);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-6 relative z-10">
-      <div className="glass-premium rounded-3xl border border-white/15 h-[650px] shadow-glass-3d overflow-hidden flex flex-col md:flex-row">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 relative z-10">
+      <div className="glass-premium rounded-3xl border border-white/15 h-[580px] shadow-glass-3d overflow-hidden flex flex-col md:flex-row">
         
         {/* Left Conversation List Sidebar */}
         <div className="w-full md:w-80 border-r border-white/10 flex flex-col glass-subtle">
